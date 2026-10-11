@@ -226,6 +226,23 @@ svg.only-narrow{display:none}
 .n-ta{fill:var(--accent-ink);font-size:14px;font-weight:700}
 .n-tm{fill:var(--amber-ink);font-size:14px;font-weight:700}
 
+
+/* PR chapter */
+ul.frame{list-style:none;margin:0;padding:0;font-size:14.5px;border-top:1px solid var(--rule)}
+ul.frame li{display:flex;justify-content:space-between;gap:12px;padding:9px 12px;border-bottom:1px solid var(--rule)}
+ul.frame li span:last-child{font-weight:700;white-space:nowrap}
+ul.frame li.self{background:var(--accent-soft);box-shadow:inset 3px 0 0 var(--accent)}
+ul.frame li.self span{color:var(--accent-ink);font-weight:700}
+.article .hd{font-family:var(--serif);font-weight:700;font-size:16px;line-height:1.65;margin:0 0 12px;padding-bottom:10px;border-bottom:1px solid var(--rule-strong)}
+.hl-g{border-bottom:2.5px solid var(--accent);padding-bottom:1px}
+.hl-b{background:var(--paper);outline:1px solid var(--rule-strong);padding:0 3px;font-weight:700}
+.hl-m{border-bottom:2.5px solid var(--amber);padding-bottom:1px}
+.hl-s{background:var(--paper);outline:2px solid var(--accent);padding:0 3px;font-weight:700;color:var(--accent-ink)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12px;color:var(--ink3);margin-top:12px}
+.legend>span>span{display:inline-block;width:1.4em;line-height:1.1;margin-right:4px}
+.strip-plain{margin:18px 0 22px}
+.strip-plain div{padding:14px 16px}
+
 /* mobile toc */
 .toc-m{display:none}
 @media (max-width:1099px){
@@ -299,7 +316,7 @@ svg.only-narrow{display:none}
       <p class="subtitle"><span class="nb">意味集合で、</span><span class="nb">生成AIの第一想起を取りにいく</span></p>
       <div class="abstract">
         <h2>要旨</h2>
-        <p>生成AIが企業や製品を推薦するかどうかは、文章の書き方ではなく、質問の意味と企業の意味がどれだけ重なるかで決まる。本書は、Transformerの推論・検索・学習という公開された仕組みからこの「意味集合」の考え方を導き、BtoB企業が生成AIの候補に入り、選ばれるための発信を設計する。結論は三つある。AI検索で選ばれるかどうかは、生成の前段にある意味のふるいで決まる。AIの記憶は、一般名詞と自社名の双方向の共起と、意味集合の語との共起によって形づくられる。そしてその共起は、第三者目線の完結した文で、別々に書かれた複数の文章として、続けて積む必要がある。</p>
+        <p>生成AIが企業や製品を推薦するかどうかは、文章の書き方ではなく、質問の意味と企業の意味がどれだけ重なるかで決まる。本書は、Transformerの推論・検索・学習という公開された仕組みからこの「意味集合」の考え方を導き、BtoB企業が生成AIの候補に入り、選ばれるための発信を設計する。結論は三つある。AI検索で選ばれるかどうかは、生成の前段にある意味のふるいで決まる。AIの記憶は、一般名詞と自社名の双方向の共起と、意味集合の語との共起によって形づくられる。そしてその共起は、第三者目線の完結した文で、別々に書かれた複数の文章として、続けて積む必要がある。その最も強い手段が、大手と並んで語られる取材記事を生む戦略PRの発想である。</p>
       </div>
     </div>
     <div class="cover-side">
@@ -327,7 +344,7 @@ svg.only-narrow{display:none}
         <dt>発行</dt><dd>2026年10月　第1版</dd>
         <dt>発行者</dt><dd>株式会社IDEATECH</dd>
         <dt>対象</dt><dd>ご支援先の広報・マーケティングご担当者</dd>
-        <dt>構成</dt><dd>全7章、参考文献16件</dd>
+        <dt>構成</dt><dd>全8章、参考文献19件</dd>
       </dl>
     </div>
   </div>
@@ -343,8 +360,9 @@ svg.only-narrow{display:none}
       <li><a href="#ch3">第3章　AI検索</a></li>
       <li><a href="#ch4">第4章　学習</a></li>
       <li><a href="#ch5">第5章　積み込み方</a></li>
-      <li><a href="#ch6">第6章　IDEATECHの進め方</a></li>
-      <li><a href="#ch7">第7章　よくある誤解</a></li>
+      <li><a href="#chpr">第6章　戦略PRの発想</a></li>
+      <li><a href="#ch6">第7章　IDEATECHの進め方</a></li>
+      <li><a href="#ch7">第8章　よくある誤解</a></li>
       <li><a href="#outro">おわりに</a></li>
       <li><a href="#refs">参考文献</a></li>
       <li><a href="#terms">用語集</a></li>
@@ -359,8 +377,9 @@ svg.only-narrow{display:none}
       <li><a href="#ch3">第3章　AI検索</a></li>
       <li><a href="#ch4">第4章　学習</a></li>
       <li><a href="#ch5">第5章　積み込み方</a></li>
-      <li><a href="#ch6">第6章　IDEATECHの進め方</a></li>
-      <li><a href="#ch7">第7章　よくある誤解</a></li>
+      <li><a href="#chpr">第6章　戦略PRの発想</a></li>
+      <li><a href="#ch6">第7章　IDEATECHの進め方</a></li>
+      <li><a href="#ch7">第8章　よくある誤解</a></li>
       <li><a href="#outro">おわりに</a></li>
       <li><a href="#refs">参考文献</a></li>
       <li><a href="#terms">用語集</a></li>
@@ -369,7 +388,7 @@ svg.only-narrow{display:none}
       <h2>はじめに</h2>
       <p>生成AIに「おすすめの経費精算システムは？」と尋ねたとき、自社の名前が挙がるかどうか。BtoB企業の広報やマーケティングにとって、この問いはここ1〜2年で急速に重みを増した。</p>
       <p>その対策として語られるLLMO（大規模言語モデル最適化）には、FAQ形式にする、構造化データを入れるといった、SEOの延長にある手法が多い。本書はその立場をとらない。AIが社名を挙げるかどうかは、文章の書き方ではなく、質問の意味と社名の意味がどれだけ重なっているかで決まる。この「意味集合」の考え方から発信を設計し直すことが、本書の目的である。</p>
-      <p>第1章から第4章では、言語モデルの推論・検索・学習の仕組みを、公開された研究にもとづいて説明する。第5章で書き方を、第6章でIDEATECHがご支援先の皆さまと進める手順を示す。数式は理解の補助として置いた。読み飛ばしても、各章の結論は追える。</p>
+      <p>第1章から第4章では、言語モデルの推論・検索・学習の仕組みを、公開された研究にもとづいて説明する。第5章で書き方を、第6章で取材と意味集合を同時に取る戦略PRの発想を、第7章でIDEATECHがご支援先の皆さまと進める手順を示す。数式は理解の補助として置いた。読み飛ばしても、各章の結論は追える。</p>
       <p>理論の骨格は、株式会社トドオナダとの議論と同社の資料<a class="cite" href="#r16">[16]</a>に多くを負っている。そのうえで主要な主張を研究文献で確かめ、IDEATECHの実務と結びつけて再構成した。同社の独自調査にもとづく数値は、その旨を本文に明記している。</p>
     </section>
 
@@ -957,13 +976,76 @@ svg.only-narrow{display:none}
       <aside class="points"><p class="h">この章の要点</p><p>一般名詞と自社名の双方向の共起で方向を決め、意味集合の語との共起で移動量をつくる。助詞でつないだ完結した文で、両方の語順で、出し続ける。</p></aside>
     </section>
 
-    <section class="chapter" id="ch6">
+    <section class="chapter" id="chpr">
       <p class="ch-no">第6章</p>
+      <h2>戦略PRの発想：ニュースをつくり、大手と並んで語られる</h2>
+      <p class="lead">意味集合は、書き方を整えるだけでは積み上がらない。記者が取り上げたくなる切り口をつくり、取材記事という「別々に書かれた文章」を生む必要がある。その記事の中で大手と同じ文脈で語られれば、取材、意味集合、大手との並列の三つを一度に取れる。</p>
+
+      <h3><span class="sec">6.1</span>ニュースをつくる三つの力</h3>
+      <p>第5章までの内容は、発信の中身の整え方である。しかし、自社のリリースだけで意味集合を積むには限界がある。4.5節で見たとおり、学習に効くのは別々に書かれた文章であり、その代表がメディアの取材記事だ。取材を得るには、記者が「いま、これを書く理由」を持てる切り口が要る。</p>
+      <p>戦略PRは、この切り口を三つの力でつくってきた。それぞれの力は、そのまま意味集合の言葉に置き換えられる。</p>
+      <div class="tbl">
+        <table>
+          <thead><tr><th>力</th><th>戦略PRでの意味</th><th>意味集合で見ると</th></tr></thead>
+          <tbody>
+            <tr><td data-label="力">強みを理解する</td><td data-label="戦略PRでの意味">自社が構造的に勝てる軸を言語化する。業界の何番手であっても、大手にない特異性はある</td><td data-label="意味集合で見ると">基準Xの候補になる</td></tr>
+            <tr><td data-label="力">市場を理解する</td><td data-label="戦略PRでの意味">市場と大手がどう語られているか、メディアと社会がいま何に関心を持っているかを知る</td><td data-label="意味集合で見ると">カテゴリの意味集合と、その中での大手の位置を知る</td></tr>
+            <tr><td data-label="力">ニュースを生み出す</td><td data-label="戦略PRでの意味">強みと市場をつなぎ、記者が書ける構図にする。調査データ、社会課題、季節性、新しい分類、競争の構図が素材になる</td><td data-label="意味集合で見ると">一般名詞、大手、自社が同じ文に並ぶ記事を生む</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3><span class="sec">6.2</span>大手に相乗りして、取材企画をつくる</h3>
+      <p>PRの世界でよく知られた手法に、大手に相乗りして取材企画を得るやり方がある。典型が「回転寿司戦争」のような競争の構図だ。</p>
+      <p>業界6番手の回転寿司チェーンF社が、取材を狙うとする。F社単独のニュースでは、記者は動きにくい。そこでF社のPR担当者は、大手4社をこちらの意図で分類し直す。価格で戦う大手A、体験とエンタメで戦う大手B、テクノロジーで戦う大手C、サイドメニューの品ぞろえで戦う大手D。そのうえで、どの大手も取っていない軸、たとえば漁港直送の鮮度で戦う存在としてF社を置く。</p>
+      <p>記者にとって、この構図はそのまま特集の骨格になる。「回転寿司、5つの戦い方」という企画であれば、大手4社を取り上げる理由と、6番手のF社を同じ記事に入れる理由が同時に立つ。F社は、大手と並ぶ一社として誌面に載る。</p>
+      <figure>
+        <div class="cols">
+          <div class="card">
+            <h4>PR担当者がつくる分類</h4>
+            <p class="k">記者に渡す企画書の1枚</p>
+            <ul class="frame">
+              <li><span>価格で戦う</span><span>大手A</span></li>
+              <li><span>体験・エンタメで戦う</span><span>大手B</span></li>
+              <li><span>テクノロジーで戦う</span><span>大手C</span></li>
+              <li><span>品ぞろえで戦う</span><span>大手D</span></li>
+              <li class="self"><span>鮮度・産地で戦う</span><span>F社（業界6番手）</span></li>
+            </ul>
+          </div>
+          <div class="card a article">
+            <h4>記者が書く記事（例）</h4>
+            <p class="hd">回転寿司は「5つの戦い方」へ　大手が価格と体験で競う中、6番手のF社は漁港直送で独自路線</p>
+            <p>価格の<span class="hl-b">A</span>、エンタメの<span class="hl-b">B</span>、テクノロジーの<span class="hl-b">C</span>が規模を競う<span class="hl-g">回転寿司</span>業界で、<span class="hl-s">F社</span>は<span class="hl-m">漁港直送</span>の<span class="hl-m">鮮度</span>という別の軸で支持を広げている。</p>
+            <div class="legend"><span><span class="hl-g">　</span> 一般名詞</span><span><span class="hl-b">　</span> 大手の社名</span><span><span class="hl-m">　</span> 意味集合の語</span><span><span class="hl-s">　</span> 自社</span></div>
+          </div>
+        </div>
+        <figcaption><b>図6-1</b>大手をこちらの意図で分類し、どの大手も取っていない軸に自社を置く。社名を伏せた架空の例で、記事の文面も説明のための例である。</figcaption>
+      </figure>
+
+      <h3><span class="sec">6.3</span>一本の取材記事で、三つを同時に取る</h3>
+      <p>図6-1の記事の一文を、第2章から第5章の目で読み直すと、三つのことが同時に起きている。</p>
+      <div class="strip strip-plain">
+        <div><b>取材</b>記者という第三者が書いた、文面の異なる文章になる。重複除去でまとめられにくく、自社の発信より客観的な文体で残る（4.4節・4.5節）</div>
+        <div><b>意味集合</b>「回転寿司」という一般名詞と、「鮮度」「漁港直送」という意味の語が、F社と同じ文に入る。第5章の二つの共起が、記者の手で書かれる</div>
+        <div><b>大手との並列</b>想起集合の常連である大手の社名と、同じ文で語られる。大手の連想に相乗りし、同じカテゴリの候補として学習される</div>
+      </div>
+      <p>さらに、この分類そのものがルールメイクになっている。「回転寿司は5つの戦い方で選ぶ」という見方が記事を通じて広がれば、「鮮度で選ぶなら？」という問いが生まれ、その答えの位置にF社がいる。鮮度と産地は、F社が構造的に勝てる軸であり、回転寿司の意味集合にもともと入っている言葉でもある。第7章で述べる基準Xの三つの条件を、すべて満たしている。</p>
+      <p>BtoBでも、構図は変わらない。経費精算システムであれば、調査データをもとに大手製品の選ばれ方を「導入規模」「連携範囲」「現場での使いやすさ」といった軸で整理し、自社を「建設現場の精算」という軸の代表として置く。他社名を出しにくいリリースでも、分類の軸と調査データを示しておけば、大手と並ぶ構図は記者の記事や企画の中でつくられる。分類の根拠が調査データであれば、記者が書く理由はさらに強くなる。</p>
+
+      <h3><span class="sec">6.4</span>人の想起も、AIの想起も同じ形をしている</h3>
+      <p>「想起集合（evoked set）」は、もともと消費者行動論の言葉である。ハワードとシェスは、購買者が選択肢として思い浮かべるブランドの集まりをこう呼んだ<a class="cite" href="#r17">[17]</a>。ケラーは、消費者の頭の中にあるブランドの知識を、ブランド名を中心に連想が結びついたネットワークとして描いた<a class="cite" href="#r18">[18]</a>。AIの意味集合は、この連想のネットワークを数値で実装したものと見ることもできる。</p>
+      <p>ケラーらは、ブランドのポジショニングを三つの要素で考えるよう勧めている<a class="cite" href="#r19">[19]</a>。どのカテゴリの中で比べられるかという準拠枠、カテゴリの一員と認められるための同等点、選ばれる理由になる差別化点である。回転寿司の例でいえば、「5つの戦い方」という分類が準拠枠を、大手と並んで語られることが同等点を、漁港直送という独自の軸が差別化点をつくっている。本書の言葉に置き換えると、同等点が候補入り（第5章の二つの共起）に、差別化点が基準X（第7章）に対応する。</p>
+      <p><span class="mark">人が「大手と並んで記事に出ていたブランド」をカテゴリの一員として覚えるように、AIも、大手と同じ文で語られた社名を同じカテゴリの候補として学習する。</span>戦略PRが培ってきた想起の取り方は、AIに対してもそのまま通用する。違うのは、その記事が人の記憶に残るだけでなく、次のモデルの学習データにもなるという点である。</p>
+      <aside class="points"><p class="h">この章の要点</p><p>ニュースをつくる力は、意味集合をつくる力でもある。大手をこちらの意図で分類し、自社だけの軸を置き、大手と並んで語られる記事を生む。それが取材、意味集合、ルールメイクを同時に進める。</p></aside>
+    </section>
+
+    <section class="chapter" id="ch6">
+      <p class="ch-no">第7章</p>
       <h2>IDEATECHの進め方：意味集合 × ルールメイク × 調査PR</h2>
       <p class="lead">意味集合対策で候補に入り、ルールメイクで選ばれる理由をつくる。その両方を、調査PRで継続的に積み上げる。</p>
 
-      <h3><span class="sec">6.1</span>候補に入る、そして選ばれる</h3>
-      <p>意味集合対策は、想起集合に入るための打ち手である。一方、候補の中からどれが選ばれるかは「選び方の基準」で決まる。この基準を、自社が有利になる形でファクトとともに市場へ定着させる手法を、IDEATECHは「ルールメイク」と呼んできた。洗剤の購買基準を「白さ」から「除菌力」へ書き換えた戦略PRと同じ発想である。</p>
+      <h3><span class="sec">7.1</span>候補に入る、そして選ばれる</h3>
+      <p>意味集合対策は、想起集合に入るための打ち手である。一方、候補の中からどれが選ばれるかは「選び方の基準」で決まる。この基準を、自社が有利になる形でファクトとともに市場へ定着させる手法を、IDEATECHは「ルールメイク」と呼んできた。洗剤の購買基準を「白さ」から「除菌力」へ書き換えた戦略PRと同じ発想であり、第6章の回転寿司の分類もその一つである。</p>
       <p>ルールメイクの中心は「基準X」の設定にある。基準Xには三つの条件を置く。自社が構造的に勝てる軸であること。調査で証明できること。そして、カテゴリの意味集合にすでに入っている言葉であること。三つ目の条件を満たせば、基準Xで語ること自体が、候補に入るための発信にもなる。</p>
       <figure>
         <div class="fig">
@@ -1002,11 +1084,11 @@ svg.only-narrow{display:none}
 <text class="n-ta" x="60" y="358">③は候補入りにも効く（点線）</text>
 </svg>
         </div>
-        <figcaption><b>図6-1</b>推薦の二段階と、基準Xの条件。三つ目の条件が、二つの対策をつなぐ。</figcaption>
+        <figcaption><b>図7-1</b>推薦の二段階と、基準Xの条件。三つ目の条件が、二つの対策をつなぐ。</figcaption>
       </figure>
       <p>順番は、候補入りが先である。「大企業ならA、中堅企業ならB」といった条件分岐は、ユーザーがその条件を入力して初めて効く。候補に入っていなければ、条件で選ばれる場面そのものが回ってこない。加えて、その基準で質問するニーズが利用者の側に育っていなければ、基準は入力されない。ルールメイクの発信は、AIに向けた発信であると同時に、人に向けた基準づくりでもある。</p>
 
-      <h3><span class="sec">6.2</span>なぜ調査PRなのか</h3>
+      <h3><span class="sec">7.2</span>なぜ調査PRなのか</h3>
       <p>ここまでの条件を一つの形式で満たすのが、調査PR（IDEATECHのリサピー®）である。</p>
       <div class="tbl">
         <table>
@@ -1021,7 +1103,7 @@ svg.only-narrow{display:none}
         </table>
       </div>
 
-      <h3><span class="sec">6.3</span>進め方とKPI</h3>
+      <h3><span class="sec">7.3</span>進め方とKPI</h3>
       <p>IDEATECHは、IDEA LLMO Boardの三つの機能（Monitoring、Strategy、Action List）に沿って、次のサイクルで進める。</p>
       <figure>
         <div class="fig">
@@ -1047,7 +1129,7 @@ svg.only-narrow{display:none}
           </svg>
 <svg class="only-narrow" viewBox="0 0 360 320" role="img" aria-label="診断、設計、実行、計測を繰り返すサイクル"><defs><marker id="n62" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path class="s-ah" d="M0 0L10 5L0 10z"/></marker></defs><rect class="s-box" x="12" y="12" width="160" height="104" rx="6"/><text class="n-tb" x="26" y="40">1　診断</text><text class="n-ta" x="26" y="60" style="font-size:13px">Monitoring</text><text class="n-tc" x="26" y="84">想起質問・想起集合</text><text class="n-tc" x="26" y="104">意味集合を計測</text><rect class="s-box" x="188" y="12" width="160" height="104" rx="6"/><text class="n-tb" x="202" y="40">2　設計</text><text class="n-ta" x="202" y="60" style="font-size:13px">Strategy</text><text class="n-tc" x="202" y="84">基準Xと調査を設計</text><text class="n-tc" x="202" y="104">発信先と頻度</text><rect class="s-box-a" x="188" y="148" width="160" height="104" rx="6"/><text class="n-tb" x="202" y="176">3　実行</text><text class="n-ta" x="202" y="196" style="font-size:13px">Action List</text><text class="n-tc" x="202" y="220">調査リリース・寄稿</text><text class="n-tc" x="202" y="240">共催とレポート</text><rect class="s-box" x="12" y="148" width="160" height="104" rx="6"/><text class="n-tb" x="26" y="176">4　計測</text><text class="n-ta" x="26" y="196" style="font-size:13px">Monitoring</text><text class="n-tc" x="26" y="220">引用・想起を追う</text><text class="n-tc" x="26" y="240">競合の発信量も</text><line class="s-ln" x1="173" y1="64" x2="186" y2="64" marker-end="url(#n62)"/><line class="s-ln" x1="268" y1="117" x2="268" y2="146" marker-end="url(#n62)"/><line class="s-ln" x1="187" y1="200" x2="174" y2="200" marker-end="url(#n62)"/><line class="s-ln" x1="92" y1="147" x2="92" y2="118" marker-end="url(#n62)"/><text class="n-ts" x="180" y="284" text-anchor="middle">新しいモデルが出るたびに、</text><text class="n-ts" x="180" y="304" text-anchor="middle">効果を判定して設計を見直す</text></svg>
         </div>
-        <figcaption><b>図6-2</b>IDEATECHの進め方。結果はIDEA LLMO Intelligence Reportとしてお渡しする。</figcaption>
+        <figcaption><b>図7-2</b>IDEATECHの進め方。結果はIDEA LLMO Intelligence Reportとしてお渡しする。</figcaption>
       </figure>
       <p>診断では、IDEAインサイト®でペルソナと、その人がAIに入力する一般名詞を特定し、想起集合と意味集合を計測する。設計では、基準X、調査テーマ、発信先と頻度を決める。実行では、調査リリース、寄稿、共催イベントとそのレポートを継続する。計測では、AI検索での引用・掲載、想起集合への出現、意味集合のカバー、競合の発信量を追い、新しいモデルが出るたびに、施策期間がカットオフに含まれていたかを確かめる。</p>
       <p>最終的に見る指標は、AI経由の問い合わせ件数、問い合わせ企業の質、受注である。AI経由の流入数そのものには多くを期待できないが、AIで候補を絞ってから問い合わせてくる企業は案件化率が高い。言及率や意味集合のカバーは、そこに至る先行指標として置く。</p>
@@ -1055,7 +1137,7 @@ svg.only-narrow{display:none}
     </section>
 
     <section class="chapter" id="ch7">
-      <p class="ch-no">第7章</p>
+      <p class="ch-no">第8章</p>
       <h2>よくある誤解</h2>
       <p class="lead">LLMO対策の現場でよく聞く説明を、本書の仕組みに照らして確かめる。</p>
       <dl class="qa">
@@ -1102,6 +1184,9 @@ svg.only-narrow{display:none}
         <li id="r14">Berglund, L. et al. (2024). The Reversal Curse: LLMs trained on “A is B” fail to learn “B is A”. <i>ICLR 2024</i>. <a href="https://arxiv.org/abs/2309.12288">arXiv:2309.12288</a></li>
         <li id="r15">Gao, L. et al. (2020). The Pile: An 800GB Dataset of Diverse Text for Language Modeling. <a href="https://arxiv.org/abs/2101.00027">arXiv:2101.00027</a></li>
         <li id="r16">株式会社トドオナダ（2026）. AI第一想起を目指す LLM時代の意味集合対策（ダイジェスト資料）.</li>
+        <li id="r17">Howard, J. A., &amp; Sheth, J. N. (1969). <i>The Theory of Buyer Behavior</i>. New York: John Wiley &amp; Sons.</li>
+        <li id="r18">Keller, K. L. (1993). Conceptualizing, Measuring, and Managing Customer-Based Brand Equity. <i>Journal of Marketing</i>, 57(1), 1–22.</li>
+        <li id="r19">Keller, K. L., Sternthal, B., &amp; Tybout, A. M. (2002). Three Questions You Need to Ask About Your Brand. <i>Harvard Business Review</i>, 80(9), 80–86.</li>
       </ol>
     </section>
 
@@ -1129,6 +1214,7 @@ svg.only-narrow{display:none}
             <tr><td data-label="用語">重複除去</td><td data-label="意味">学習前に、同一または酷似した文書を取り除く処理。MinHashなどの手法が使われる</td></tr>
             <tr><td data-label="用語">カットオフ</td><td data-label="意味">モデルが学習したデータの締め日</td></tr>
             <tr><td data-label="用語">基準X</td><td data-label="意味">ルールメイクで市場に定着させる選び方の基準。構造的に勝てる軸、調査で証明できること、意味集合にある言葉であることが条件</td></tr>
+            <tr><td data-label="用語">準拠枠・同等点・差別化点</td><td data-label="意味">ブランドのポジショニングの3要素。どのカテゴリで比べられるか、カテゴリの一員と認められる共通点、選ばれる理由になる違い</td></tr>
             <tr><td data-label="用語">ルールメイク</td><td data-label="意味">自社に有利な選び方の基準を調査で裏づけ、市場とAIに定着させるIDEATECHの手法</td></tr>
           </tbody>
         </table>
