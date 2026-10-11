@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LLMO対策の教科書｜意味集合で、生成AIの第一想起を取りにいく｜株式会社IDEATECH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=BIZ+UDPGothic:wght@400;700&family=Noto+Serif+JP:wght@600;700&family=STIX+Two+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F2F4F7;--paper:#FFFFFF;--paper2:#F8F9FB;
+  --ink:#0F1B33;--ink2:#3B475E;--ink3:#69738A;
+  --rule:#DDE2EA;--rule-strong:#B8C1CE;
+  --accent:#1F4D8F;--accent-ink:#163B70;--accent-soft:#E8EEF7;
+  --amber:#B97A1C;--amber-ink:#7E520F;--amber-soft:#FBF2E2;
+  --sans:"BIZ UDPGothic","Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic UI","Meiryo",sans-serif;
+  --serif:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho","YuMincho",serif;
+  --math:"STIX Two Text","Cambria Math","Cambria","Times New Roman",serif;
+  color-scheme:light;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0C111C;--paper:#131A29;--paper2:#18202F;
+    --ink:#E7EBF2;--ink2:#B4BDCD;--ink3:#8993A8;
+    --rule:#273047;--rule-strong:#3A4560;
+    --accent:#8DAEE8;--accent-ink:#C4D5F4;--accent-soft:#1B2844;
+    --amber:#E1A84B;--amber-ink:#F2CC8C;--amber-soft:#2D2414;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0C111C;--paper:#131A29;--paper2:#18202F;
+  --ink:#E7EBF2;--ink2:#B4BDCD;--ink3:#8993A8;
+  --rule:#273047;--rule-strong:#3A4560;
+  --accent:#8DAEE8;--accent-ink:#C4D5F4;--accent-soft:#1B2844;
+  --amber:#E1A84B;--amber-ink:#F2CC8C;--amber-soft:#2D2414;
+  color-scheme:dark;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.95;letter-spacing:.02em;-webkit-text-size-adjust:100%}
+a{color:var(--accent-ink)}
+a:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:3px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* cover */
+.cover{max-width:1180px;margin:0 auto;padding:48px 24px 0}
+.cover-inner{background:var(--paper);border:1px solid var(--rule);border-top:5px solid var(--accent);padding:56px 56px 48px;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:48px;align-items:start}
+.issuer{font-size:13px;color:var(--ink3);margin:0 0 36px;letter-spacing:.06em}
+.cover h1 .nb{display:inline-block}
+.cover h1{font-family:var(--serif);font-weight:700;font-size:clamp(38px,5.6vw,64px);line-height:1.22;letter-spacing:.06em;margin:0 0 14px}
+.cover .subtitle .nb{display:inline-block}
+.cover .subtitle{font-family:var(--serif);font-weight:600;font-size:clamp(17px,2.1vw,22px);line-height:1.6;color:var(--ink2);margin:0 0 40px}
+.abstract{border-left:3px solid var(--accent);padding:2px 0 2px 20px;max-width:40em}
+.abstract h2{font-family:var(--sans);font-size:14px;font-weight:700;margin:0 0 6px;color:var(--ink)}
+.abstract p{font-size:14.5px;line-height:1.95;color:var(--ink2);margin:0}
+.cover-side svg{display:block;width:100%;height:auto;margin-bottom:24px}
+.meta{display:grid;grid-template-columns:auto 1fr;gap:8px 20px;margin:0;font-size:13.5px;line-height:1.7;border-top:1px solid var(--rule);padding-top:20px}
+.meta dt{color:var(--ink3)}
+.meta dd{margin:0;color:var(--ink)}
+@media (max-width:880px){.cover-inner{grid-template-columns:1fr;padding:36px 24px 32px;gap:28px}}
+
+/* layout */
+.layout{max-width:1180px;margin:0 auto;padding:0 24px 72px;display:grid;grid-template-columns:minmax(0,1fr);column-gap:44px}
+nav.toc{display:none}
+@media (min-width:1100px){
+  .layout{grid-template-columns:220px minmax(0,1fr)}
+  nav.toc{display:block;position:sticky;top:calc(24px + env(safe-area-inset-top,0px));align-self:start;margin-top:32px;max-height:calc(100vh - 48px);overflow:auto;padding-bottom:16px}
+}
+nav.toc p{font-size:12.5px;color:var(--ink3);margin:0 0 10px;letter-spacing:.08em}
+nav.toc ol{list-style:none;margin:0;padding:0;border-left:1px solid var(--rule)}
+nav.toc a{display:block;padding:6px 0 6px 14px;margin-left:-1px;border-left:2px solid transparent;font-size:13.5px;line-height:1.55;color:var(--ink2);text-decoration:none}
+nav.toc a:hover{color:var(--ink)}
+nav.toc a.on{color:var(--ink);border-left-color:var(--accent);font-weight:700}
+main{min-width:0;max-width:820px}
+
+/* chapters */
+.chapter{background:var(--paper);border:1px solid var(--rule);padding:52px 60px 44px;margin-top:32px}
+@media (max-width:720px){.chapter{padding:32px 20px 28px}}
+.ch-no{font-family:var(--serif);font-weight:600;font-size:15px;color:var(--accent);margin:0 0 4px;letter-spacing:.1em}
+.chapter h2{font-family:var(--serif);font-weight:700;font-size:clamp(24px,3vw,31px);line-height:1.5;letter-spacing:.03em;margin:0 0 20px}
+.lead{font-size:17px;line-height:1.95;color:var(--ink);padding-bottom:22px;border-bottom:1px solid var(--rule);margin:0 0 8px}
+.chapter h3{font-family:var(--serif);font-weight:600;font-size:20px;line-height:1.55;margin:44px 0 12px}
+.chapter h3 .sec{font-family:var(--math);font-weight:600;color:var(--accent);margin-right:.7em}
+.chapter p{margin:0 0 1.15em;max-width:40em}
+.cite{font-size:.72em;vertical-align:super;line-height:0;text-decoration:none;color:var(--accent-ink);margin-left:1px}
+.note{font-size:13.5px;color:var(--ink3);line-height:1.85}
+.mark{background:linear-gradient(transparent 62%,var(--amber-soft) 62%)}
+
+/* equations */
+.eq{position:relative;margin:24px 0 10px;padding:18px 64px 18px 24px;background:var(--paper2);border:1px solid var(--rule);text-align:center;font-family:var(--math);font-size:21px;line-height:1.4;color:var(--ink);overflow-x:auto}
+.eq-body{display:inline-block;white-space:nowrap}
+.eq i{font-style:italic}
+.eq b{font-weight:600}
+.eq .fn{font-style:normal}
+.eq-no{position:absolute;right:16px;top:50%;transform:translateY(-50%);font-family:var(--math);font-size:15px;color:var(--ink3)}
+.frac{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .25em}
+.frac>span{padding:0 .3em;line-height:1.35}
+.frac>span:first-child{border-bottom:1.2px solid currentColor;padding-bottom:3px}
+.frac>span:last-child{padding-top:3px}
+.ov{border-top:1.2px solid currentColor;padding-left:.1em}
+.nrm{border-left:3px double currentColor;border-right:3px double currentColor;padding:0 .14em;margin:0 .05em}
+.bigp{font-size:1.6em;line-height:1;font-weight:300}
+.sum{display:inline-flex;flex-direction:column;align-items:center;vertical-align:middle;margin:0 .15em;line-height:1}
+.sum .sg{font-size:1.45em}
+.sum .lim{font-size:.62em;margin-top:2px}
+.eq-def{font-size:14px;color:var(--ink2);margin:0 0 1.4em;line-height:1.85}
+
+/* figures */
+figure{margin:30px 0 34px}
+.fig{border:1px solid var(--rule);background:var(--paper2);padding:18px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.fig svg{display:block;width:100%;min-width:620px;height:auto}
+figcaption{font-size:13.5px;line-height:1.8;color:var(--ink2);margin-top:10px}
+figcaption b{font-family:var(--serif);color:var(--ink);margin-right:.6em}
+svg text{font-family:var(--sans)}
+.s-box{fill:var(--paper);stroke:var(--rule-strong);stroke-width:1}
+.s-box-a{fill:var(--accent-soft);stroke:var(--accent);stroke-width:1.2}
+.s-box-m{fill:var(--amber-soft);stroke:var(--amber);stroke-width:1.2}
+.s-box-g{fill:var(--bg);stroke:var(--rule-strong);stroke-width:1}
+.s-zone{fill:var(--accent-soft);fill-opacity:.55;stroke:var(--accent);stroke-width:1}
+.s-t{fill:var(--ink);font-size:14px}
+.s-tb{fill:var(--ink);font-size:14px;font-weight:700}
+.s-tc{fill:var(--ink2);font-size:12px}
+.s-ts{fill:var(--ink3);font-size:12px}
+.s-ta{fill:var(--accent-ink);font-size:13px;font-weight:700}
+.s-tm{fill:var(--amber-ink);font-size:13px;font-weight:700}
+.s-ln{stroke:var(--ink3);stroke-width:1.2;fill:none}
+.s-ln-a{stroke:var(--accent);fill:none}
+.s-ln-m{stroke:var(--amber);fill:none}
+.s-dash{stroke-dasharray:4 4}
+.s-ah{fill:var(--ink3)}
+.s-ah-a{fill:var(--accent)}
+.s-ah-m{fill:var(--amber)}
+.s-dot{fill:var(--accent)}
+.s-dot-g{fill:var(--ink3)}
+.s-bar-a{fill:var(--accent)}
+.s-bar-g{fill:var(--rule-strong)}
+.s-bar-m{fill:var(--amber)}
+
+/* tables */
+.tbl{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:22px 0 10px}
+table{border-collapse:collapse;width:100%;min-width:580px;font-size:14.5px;line-height:1.75}
+th{text-align:left;font-weight:700;font-size:13px;color:var(--ink2);padding:10px 12px;border-bottom:2px solid var(--ink);background:var(--paper2)}
+td{padding:12px;border-bottom:1px solid var(--rule);vertical-align:top}
+td:first-child{font-weight:700;min-width:8.5em}
+
+/* cards and lists */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:640px){.cols{grid-template-columns:1fr}}
+.card{background:var(--paper);border:1px solid var(--rule-strong);padding:18px 20px}
+.card.a{border-color:var(--accent);background:var(--accent-soft)}
+.card.m{border-color:var(--amber);background:var(--amber-soft)}
+.card h4{font-family:var(--serif);font-weight:700;font-size:16px;margin:0 0 4px;line-height:1.55}
+.card .k{font-size:12.5px;color:var(--ink3);margin:0 0 12px}
+.card p{font-size:14.5px;margin:0 0 .6em}
+.card ol{margin:0;padding-left:1.3em;font-size:14.5px}
+.card ol li{margin-bottom:.4em}
+.ex{background:var(--paper);border-left:3px solid var(--rule-strong);padding:8px 14px;font-size:14.5px;margin:8px 0}
+.card.a .ex{border-left-color:var(--accent)}
+.card.m .ex{border-left-color:var(--amber)}
+.ex small{display:block;font-size:12px;color:var(--ink3)}
+.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:16px;font-size:13.5px}
+.strip div{background:var(--paper);padding:10px 14px;line-height:1.7}
+.strip div b{display:block;font-family:var(--serif)}
+.strip div.on{background:var(--accent-soft)}
+@media (max-width:640px){.strip{grid-template-columns:1fr}}
+
+ol.steps{list-style:none;counter-reset:s;padding:0;margin:22px 0 26px}
+ol.steps>li{counter-increment:s;display:grid;grid-template-columns:52px minmax(0,1fr);gap:10px;padding:16px 0;border-bottom:1px solid var(--rule)}
+ol.steps>li:first-child{border-top:1px solid var(--rule)}
+ol.steps>li::before{content:counter(s);font-family:var(--math);font-weight:600;font-size:30px;line-height:1.1;color:var(--accent)}
+ol.steps strong{display:block;font-size:16.5px;margin-bottom:2px}
+ol.steps p{margin:0;font-size:15px}
+
+.points{margin:40px 0 0;background:var(--accent-soft);border-left:4px solid var(--accent);padding:18px 24px}
+.points p{margin:0;font-size:15px;max-width:none}
+.points p.h{font-family:var(--serif);font-weight:700;font-size:14px;color:var(--accent-ink);margin-bottom:6px}
+
+dl.qa{margin:20px 0 0}
+dl.qa dt{font-family:var(--serif);font-weight:700;font-size:17px;padding-top:18px;border-top:1px solid var(--rule)}
+dl.qa dt:first-child{border-top:0;padding-top:0}
+dl.qa dd{margin:6px 0 18px;max-width:40em}
+
+ol.refs{padding-left:2.4em;font-size:14px;line-height:1.75}
+ol.refs li{margin-bottom:.7em;padding-left:.3em}
+ol.refs li::marker{font-family:var(--math);color:var(--ink3)}
+
+footer{max-width:1180px;margin:0 auto;padding:28px 24px 56px;font-size:12.5px;line-height:1.8;color:var(--ink3)}
+footer p{max-width:62em;margin:0 0 .4em}
+
+@media print{
+  @page{size:A4;margin:16mm 15mm}
+  body{background:#fff;font-size:10.5pt}
+  nav.toc{display:none}
+  .layout{display:block;padding:0}
+  .cover,.layout{max-width:none}
+  .chapter{border:0;padding:0;margin:0;break-before:page}
+  .cover-inner{border:0}
+  figure,.eq,table,.card{break-inside:avoid}
+  .fig{overflow:visible}
+  .fig svg{min-width:0}
+}
+
+/* brand */
+.brand{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin:0 0 36px}
+.brand .issuer{margin:0;padding-left:18px;border-left:1px solid var(--rule-strong);line-height:1.4}
+.logo{display:block;width:auto}
+.logo-cover{height:30px}
+.logo-foot{height:22px}
+.logo-w{display:none}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .logo-b{display:none}:root:not([data-theme="light"]) .logo-w{display:block}}
+:root[data-theme="dark"] .logo-b{display:none}
+:root[data-theme="dark"] .logo-w{display:block}
+.foot-logo{margin-bottom:14px}
+
+/* narrow figures */
+svg.only-narrow{display:none}
+.n-t{fill:var(--ink);font-size:15px}
+.n-tb{fill:var(--ink);font-size:15px;font-weight:700}
+.n-tc{fill:var(--ink2);font-size:13.5px}
+.n-ts{fill:var(--ink3);font-size:13px}
+.n-ta{fill:var(--accent-ink);font-size:14px;font-weight:700}
+.n-tm{fill:var(--amber-ink);font-size:14px;font-weight:700}
+
+/* mobile toc */
+.toc-m{display:none}
+@media (max-width:1099px){
+  .toc-m{display:block;background:var(--paper);border:1px solid var(--rule);margin-top:24px;padding:0 20px}
+  .toc-m summary{cursor:pointer;padding:14px 0;font-weight:700;font-size:15px;list-style:none}
+  .toc-m summary::-webkit-details-marker{display:none}
+  .toc-m summary::after{content:"＋";float:right;color:var(--accent)}
+  .toc-m[open] summary::after{content:"－"}
+  .toc-m ol{list-style:none;margin:0 0 14px;padding:0;border-top:1px solid var(--rule)}
+  .toc-m a{display:block;padding:10px 0;border-bottom:1px solid var(--rule);text-decoration:none;color:var(--ink2);font-size:14.5px}
+}
+
+@media (max-width:600px){
+  body{font-size:15.5px;line-height:1.9;letter-spacing:.01em}
+  .cover{padding:12px 10px 0}
+  .cover-inner{padding:28px 18px 26px;gap:24px;border-top-width:4px}
+  .brand{gap:12px;margin-bottom:26px}
+  .brand .issuer{padding-left:12px;font-size:12px}
+  .logo-cover{height:24px}
+  .cover h1{font-size:36px;letter-spacing:.04em}
+  .cover .subtitle{margin-bottom:28px}
+  .abstract{padding-left:14px}
+  .layout{padding:0 10px 48px}
+  .toc-m{margin-top:16px;padding:0 16px}
+  .chapter{padding:28px 16px 24px;margin-top:16px}
+  .chapter h2{font-size:23px}
+  .chapter h3{font-size:18px;margin-top:34px}
+  .lead{font-size:16px}
+  .fig{padding:8px}
+  .fig svg.only-wide{display:none}
+  .fig svg.only-narrow{display:block;min-width:0}
+  figure{margin:24px 0 28px}
+  figcaption{font-size:13px}
+  .eq{font-size:16.5px;padding:16px 10px 30px;margin:20px 0 8px}
+  .eq-no{top:auto;bottom:6px;right:10px;transform:none;font-size:12.5px}
+  .eq-def{font-size:13.5px}
+  .tbl{overflow:visible}
+  .tbl table{min-width:0;border:0}
+  .tbl thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+  .tbl tbody,.tbl tr,.tbl td{display:block}
+  .tbl tr{border:1px solid var(--rule);background:var(--paper);margin-bottom:10px}
+  .tbl td{border-bottom:1px solid var(--rule);padding:9px 14px;min-width:0}
+  .tbl td:last-child{border-bottom:0}
+  .tbl td::before{content:attr(data-label);display:block;font-size:11.5px;font-weight:400;color:var(--ink3);margin-bottom:2px;letter-spacing:.04em}
+  .tbl td:first-child{background:var(--paper2)}
+  .card{padding:16px}
+  ol.steps>li{grid-template-columns:38px minmax(0,1fr)}
+  ol.steps>li::before{font-size:24px}
+  .points{padding:14px 16px;margin-top:30px}
+  dl.qa dt{font-size:16px}
+  ol.refs{padding-left:1.9em;font-size:13px}
+  ol.refs li{overflow-wrap:anywhere}
+  footer{padding:24px 14px 44px}
+}
+@media print{
+  .toc-m{display:none}
+  svg.only-narrow{display:none!important}
+  svg.only-wide{display:block!important}
+  .logo-w{display:none!important}
+  .logo-b{display:block!important}
+}
+</style>
+</head>
+<body>
+
+<header class="cover">
+  <div class="cover-inner">
+    <div>
+      <div class="brand"><img class="logo logo-b logo-cover" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iZGVzaWduIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4NTAgMTMwIj4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLmNscy0xIHsKICAgICAgICBmaWxsOiAjZjBmOwogICAgICB9CgogICAgICAuY2xzLTIgewogICAgICAgIGZpbGw6IGxpbWU7CiAgICAgIH0KCiAgICAgIC5jbHMtMyB7CiAgICAgICAgZmlsbDogI2ZmZjsKICAgICAgfQoKICAgICAgLmNscy00IHsKICAgICAgICBmaWxsOiAjMjEwMGZmOwogICAgICB9CgogICAgICAuY2xzLTUgewogICAgICAgIGZpbGw6ICNmY2ZmMDA7CiAgICAgIH0KCiAgICAgIC5jbHMtNiB7CiAgICAgICAgZmlsbDogcmVkOwogICAgICB9CgogICAgICAuY2xzLTcgewogICAgICAgIGZpbGw6IGFxdWE7CiAgICAgIH0KICAgIDwvc3R5bGU+CiAgPC9kZWZzPgogIDxnPgogICAgPHBvbHlnb24gcG9pbnRzPSI1MTUuOTkgMzIuODkgNTQyLjg4IDMyLjg5IDU0Mi44OCAxMDguNDcgNTU1LjUxIDEwOC40NyA1NTUuNTEgMzIuODkgNTgyLjUzIDMyLjg5IDU4Mi41MyAyMS40IDUxNS45OSAyMS40IDUxNS45OSAzMi44OSIvPgogICAgPHBvbHlnb24gcG9pbnRzPSI2MDIuMjUgMTA4LjQ3IDY2MCAxMDguNDcgNjYwIDk2Ljk4IDYxNC44OCA5Ni45OCA2MTQuODggNjkuNzIgNjU5LjExIDY5LjcyIDY1OS4xMSA1OC4yNCA2MTQuODggNTguMjQgNjE0Ljg4IDMyLjg5IDY2MCAzMi44OSA2NjAgMjEuNCA2MDIuMjUgMjEuNCA2MDIuMjUgMTA4LjQ3Ii8+CiAgICA8cGF0aCBkPSJNNzQ1LjkzLDg2LjYxYy00LjksNy4zNC0xMy42NSwxMS45MS0yMi44NSwxMS45MS0xNy44NywwLTMxLjM1LTE0LjQxLTMxLjM1LTMzLjUxczEzLjE4LTMzLjUxLDMxLjM1LTMzLjUxYzkuMTEsMCwxNy44Nyw0LjU2LDIyLjg2LDExLjkxbC41My43OCwxMC43NC01Ljk5LS42Ni0uOTNjLTcuOTgtMTEuMjktMTkuNTUtMTcuMjYtMzMuNDctMTcuMjYtMjUuMjksMC00NC4zNiwxOS4zNS00NC4zNiw0NXMxOS4wNyw0NSw0NC4zNiw0NWMxNC4wNSwwLDI1LjAzLTUuNjQsMzMuNTgtMTcuMjRsLjctLjk1LTEwLjkxLTUuOTktLjUyLjc4WiIvPgogICAgPHBvbHlnb24gcG9pbnRzPSI4MzcuMzcgMjEuNCA4MzcuMzcgNTcuOTggNzg5LjcxIDU3Ljk4IDc4OS43MSAyMS40IDc3Ny4wOCAyMS40IDc3Ny4wOCAxMDguNDcgNzg5LjcxIDEwOC40NyA3ODkuNzEgNjkuNDcgODM3LjM3IDY5LjQ3IDgzNy4zNyAxMDguNDcgODUwIDEwOC40NyA4NTAgMjEuNCA4MzcuMzcgMjEuNCIvPgogICAgPHBhdGggZD0iTTI4Mi44NSwyMS40aC0zMC4wOXY4Ny4wN2gzMC4wOWMyNi4yNywwLDQ0LjYyLTE3Ljg4LDQ0LjYyLTQzLjQ3cy0xOC4zNS00My42LTQ0LjYyLTQzLjZaTTI4Mi44NSw5Ni45OGgtMTcuNDVWMzIuODloMTcuNDVjMTguOSwwLDMxLjYsMTIuOSwzMS42LDMyLjExcy0xMi43LDMxLjk4LTMxLjYsMzEuOThaIi8+CiAgICA8cG9seWdvbiBwb2ludHM9IjQwNy45NCAzMi44OSA0MDcuOTQgMjEuNCAzNTAuMTggMjEuNCAzNTAuMTggMTA4LjQ3IDQwNy45NCAxMDguNDcgNDA3Ljk0IDk2Ljk4IDM2Mi44MiA5Ni45OCAzNjIuODIgNjkuNzIgNDA3LjA1IDY5LjcyIDQwNy4wNSA1OC4yNCAzNjIuODIgNTguMjQgMzYyLjgyIDMyLjg5IDQwNy45NCAzMi44OSIvPgogICAgPHBhdGggZD0iTTQ3NC4xNSwyMS40aC0xNC41MmwtMzQuOTgsODcuMDdoMTMuOTRsNy41Mi0xOC44Nmg0MS42OWw3LjUyLDE4Ljg2aDEzLjk1bC0zNS4xMS04Ny4wN1pNNDY3LjQzLDM1LjlsMTYuMzksNDIuMjJoLTMzLjgzbDE2LjUtNDIuMjJjLjQ2LDAsLjQ4LDAsLjk0LDBaIi8+CiAgICA8cG9seWdvbiBwb2ludHM9IjIyNi4wNSAzNC4wNCAyMjYuMDUgMjEuNCAyMTQuMzQgMjEuNCAyMDEuNzEgMjEuNCAxOTAgMjEuNCAxOTAgMzQuMDQgMjAxLjcxIDM0LjA0IDIwMS43MSA5NS44NCAxOTAgOTUuODQgMTkwIDEwOC40NyAyMDEuNzEgMTA4LjQ3IDIxNC4zNCAxMDguNDcgMjI2LjA1IDEwOC40NyAyMjYuMDUgOTUuODQgMjE0LjM0IDk1Ljg0IDIxNC4zNCAzNC4wNCAyMjYuMDUgMzQuMDQiLz4KICA8L2c+CiAgPGc+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTYiIGQ9Ik01Ny43Myw0NC4wM2wzLjgyLDMuMDljNi4yLTMuNDksMTMuMzUtNS40OSwyMC45Ny01LjQ5LDcuMjMsMCwxNC4wMywxLjgsMjAuMDEsNC45NmwtMy42OS0zLjc0LDYuNy02Ljc5LTguNDctNC4zOSw0LjI3LTguNTItOS40MS0xLjU1LDEuNDMtOS40My05LjQzLDEuNDMtMS41NS05LjQxLTguNTIsNC4yNy00LjM5LTguNDctNi43OSw2LjctNi43OS02LjctNC4zOSw4LjQ3LTguNTItNC4yNy0xLjU1LDkuNDEtOS40My0xLjQzLDEuNDMsOS40My05LjQxLDEuNTUsNC4yNyw4LjUyLTguNDcsNC4zOSw2LjcsNi43OS02LjcsNi43OSwxLjE3LjYxLDYuNTEtNS42NywzMC4yMi0uNTVaIi8+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTQiIGQ9Ik0zOS42Niw4NC40OWMwLTQuMjYuNjMtOC4zNywxLjc5LTEyLjI1bC0uMDItLjE0LTkuNDMsMS40MywxLjQzLTkuNDMtOS40MS0xLjU1LDQuMjctOC41Mi03LjMtMy43OC0xNi4yOSwxNC4xOEwwLDk0LjI4bDE1LjU4LDI1LjksMjguNTksOS44MiwxOC45Ni03LjI5Yy0xMy45My03LjA4LTIzLjQ3LTIxLjUzLTIzLjQ3LTM4LjIyWiIvPgogICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMjQuMDIsNjIuNTVsOS40MSwxLjU1LTEuNDMsOS40Myw5LjQzLTEuNDMuMDIuMTRjMy4yLTEwLjc1LDEwLjUtMTkuNzMsMjAuMS0yNS4xMmwtMy44Mi0zLjA5LTMwLjIyLjU1LTYuNTEsNS42Nyw3LjMsMy43OC00LjI3LDguNTJaIi8+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xMDIuNTIsNDYuNTlsMy4wMSwzLjA1LTguNDcsNC4zOSw0LjI3LDguNTItOS40MSwxLjU1LDEuNDMsOS40My05LjQzLTEuNDMtLjQzLDIuNTksMy41MSwxOC4wMS0xNC42NCwyNi40NS05LjI1LDMuNTZjNS44MiwyLjk2LDEyLjQsNC42NCwxOS4zOCw0LjY0LDIzLjY3LDAsNDIuODUtMTkuMTksNDIuODUtNDIuODUsMC0xNi40NC05LjI2LTMwLjcxLTIyLjg1LTM3LjlaIi8+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTUiIGQ9Ik02MS41NCw0Ny4xMmwxOS42OCwxNS45MiwyLjI3LDExLjY1LjQzLTIuNTksOS40MywxLjQzLTEuNDMtOS40Myw5LjQxLTEuNTUtNC4yNy04LjUyLDguNDctNC4zOS0zLjAxLTMuMDVjLTUuOTctMy4xNi0xMi43OC00Ljk2LTIwLjAxLTQuOTYtNy42MiwwLTE0Ljc3LDItMjAuOTcsNS40OVoiLz4KICAgIDxwYXRoIGNsYXNzPSJjbHMtNyIgZD0iTTg3LjAyLDkyLjdsLTMuNTEtMTguMDEtMS4xMyw2LjgyLTguNTItNC4yNy00LjM5LDguNDctNi43OS02LjctNi43OSw2LjctNC4zOS04LjQ3LTguNTIsNC4yNy0xLjUzLTkuMjdjLTEuMTYsMy44OC0xLjc5LDcuOTktMS43OSwxMi4yNSwwLDE2LjY5LDkuNTUsMzEuMTQsMjMuNDcsMzguMjJsOS4yNS0zLjU2LDE0LjY0LTI2LjQ1WiIvPgogICAgPHBhdGggY2xhc3M9ImNscy0zIiBkPSJNNjEuNTQsNDcuMTJjLTkuNTksNS40LTE2LjksMTQuMzctMjAuMSwyNS4xMmwxLjUzLDkuMjcsOC41Mi00LjI3LDQuMzksOC40Nyw2Ljc5LTYuNyw2Ljc5LDYuNyw0LjM5LTguNDcsOC41Miw0LjI3LDEuMTMtNi44Mi0yLjI3LTExLjY1LTE5LjY4LTE1LjkyWiIvPgogIDwvZz4KPC9zdmc+" alt="IDEATECH" height="30" width="196"><img class="logo logo-w logo-cover" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iZGVzaWduIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4NTAgMTMwIj4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLmNscy0xIHsKICAgICAgICBmaWxsOiAjZjBmOwogICAgICB9CgogICAgICAuY2xzLTIgewogICAgICAgIGZpbGw6IGxpbWU7CiAgICAgIH0KCiAgICAgIC5jbHMtMyB7CiAgICAgICAgZmlsbDogI2ZmZjsKICAgICAgfQoKICAgICAgLmNscy00IHsKICAgICAgICBmaWxsOiAjMjEwMGZmOwogICAgICB9CgogICAgICAuY2xzLTUgewogICAgICAgIGZpbGw6ICNmY2ZmMDA7CiAgICAgIH0KCiAgICAgIC5jbHMtNiB7CiAgICAgICAgZmlsbDogcmVkOwogICAgICB9CgogICAgICAuY2xzLTcgewogICAgICAgIGZpbGw6IGFxdWE7CiAgICAgIH0KICAgIDwvc3R5bGU+CiAgPC9kZWZzPgogIDxnPgogICAgPHBvbHlnb24gY2xhc3M9ImNscy0zIiBwb2ludHM9IjUxNS45OSAzMi44OSA1NDIuODggMzIuODkgNTQyLjg4IDEwOC40NyA1NTUuNTEgMTA4LjQ3IDU1NS41MSAzMi44OSA1ODIuNTMgMzIuODkgNTgyLjUzIDIxLjQgNTE1Ljk5IDIxLjQgNTE1Ljk5IDMyLjg5Ii8+CiAgICA8cG9seWdvbiBjbGFzcz0iY2xzLTMiIHBvaW50cz0iNjAyLjI1IDEwOC40NyA2NjAgMTA4LjQ3IDY2MCA5Ni45OCA2MTQuODggOTYuOTggNjE0Ljg4IDY5LjcyIDY1OS4xMSA2OS43MiA2NTkuMTEgNTguMjQgNjE0Ljg4IDU4LjI0IDYxNC44OCAzMi44OSA2NjAgMzIuODkgNjYwIDIxLjQgNjAyLjI1IDIxLjQgNjAyLjI1IDEwOC40NyIvPgogICAgPHBhdGggY2xhc3M9ImNscy0zIiBkPSJNNzQ1LjkzLDg2LjYxYy00LjksNy4zNC0xMy42NSwxMS45MS0yMi44NSwxMS45MS0xNy44NywwLTMxLjM1LTE0LjQxLTMxLjM1LTMzLjUxczEzLjE4LTMzLjUxLDMxLjM1LTMzLjUxYzkuMTEsMCwxNy44Nyw0LjU2LDIyLjg2LDExLjkxbC41My43OCwxMC43NC01Ljk5LS42Ni0uOTNjLTcuOTgtMTEuMjktMTkuNTUtMTcuMjYtMzMuNDctMTcuMjYtMjUuMjksMC00NC4zNiwxOS4zNS00NC4zNiw0NXMxOS4wNyw0NSw0NC4zNiw0NWMxNC4wNSwwLDI1LjAzLTUuNjQsMzMuNTgtMTcuMjRsLjctLjk1LTEwLjkxLTUuOTktLjUyLjc4WiIvPgogICAgPHBvbHlnb24gY2xhc3M9ImNscy0zIiBwb2ludHM9IjgzNy4zNyAyMS40IDgzNy4zNyA1Ny45OCA3ODkuNzEgNTcuOTggNzg5LjcxIDIxLjQgNzc3LjA4IDIxLjQgNzc3LjA4IDEwOC40NyA3ODkuNzEgMTA4LjQ3IDc4OS43MSA2OS40NyA4MzcuMzcgNjkuNDcgODM3LjM3IDEwOC40NyA4NTAgMTA4LjQ3IDg1MCAyMS40IDgzNy4zNyAyMS40Ii8+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTMiIGQ9Ik0yODIuODUsMjEuNGgtMzAuMDl2ODcuMDdoMzAuMDljMjYuMjcsMCw0NC42Mi0xNy44OCw0NC42Mi00My40N3MtMTguMzUtNDMuNi00NC42Mi00My42Wk0yODIuODUsOTYuOThoLTE3LjQ1VjMyLjg5aDE3LjQ1YzE4LjksMCwzMS42LDEyLjksMzEuNiwzMi4xMXMtMTIuNywzMS45OC0zMS42LDMxLjk4WiIvPgogICAgPHBvbHlnb24gY2xhc3M9ImNscy0zIiBwb2ludHM9IjQwNy45NCAzMi44OSA0MDcuOTQgMjEuNCAzNTAuMTggMjEuNCAzNTAuMTggMTA4LjQ3IDQwNy45NCAxMDguNDcgNDA3Ljk0IDk2Ljk4IDM2Mi44MiA5Ni45OCAzNjIuODIgNjkuNzIgNDA3LjA1IDY5LjcyIDQwNy4wNSA1OC4yNCAzNjIuODIgNTguMjQgMzYyLjgyIDMyLjg5IDQwNy45NCAzMi44OSIvPgogICAgPHBhdGggY2xhc3M9ImNscy0zIiBkPSJNNDc0LjE1LDIxLjRoLTE0LjUybC0zNC45OCw4Ny4wN2gxMy45NGw3LjUyLTE4Ljg2aDQxLjY5bDcuNTIsMTguODZoMTMuOTVsLTM1LjExLTg3LjA3Wk00NjcuNDMsMzUuOWwxNi4zOSw0Mi4yMmgtMzMuODNsMTYuNS00Mi4yMmMuNDYsMCwuNDgsMCwuOTQsMFoiLz4KICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMyIgcG9pbnRzPSIyMjYuMDUgMzQuMDQgMjI2LjA1IDIxLjQgMjE0LjM0IDIxLjQgMjAxLjcxIDIxLjQgMTkwIDIxLjQgMTkwIDM0LjA0IDIwMS43MSAzNC4wNCAyMDEuNzEgOTUuODQgMTkwIDk1Ljg0IDE5MCAxMDguNDcgMjAxLjcxIDEwOC40NyAyMTQuMzQgMTA4LjQ3IDIyNi4wNSAxMDguNDcgMjI2LjA1IDk1Ljg0IDIxNC4zNCA5NS44NCAyMTQuMzQgMzQuMDQgMjI2LjA1IDM0LjA0Ii8+CiAgPC9nPgogIDxnPgogICAgPHBhdGggY2xhc3M9ImNscy02IiBkPSJNNTcuNzMsNDQuMDNsMy44MiwzLjA5YzYuMi0zLjQ5LDEzLjM1LTUuNDksMjAuOTctNS40OSw3LjIzLDAsMTQuMDMsMS44LDIwLjAxLDQuOTZsLTMuNjktMy43NCw2LjctNi43OS04LjQ3LTQuMzksNC4yNy04LjUyLTkuNDEtMS41NSwxLjQzLTkuNDMtOS40MywxLjQzLTEuNTUtOS40MS04LjUyLDQuMjctNC4zOS04LjQ3LTYuNzksNi43LTYuNzktNi43LTQuMzksOC40Ny04LjUyLTQuMjctMS41NSw5LjQxLTkuNDMtMS40MywxLjQzLDkuNDMtOS40MSwxLjU1LDQuMjcsOC41Mi04LjQ3LDQuMzksNi43LDYuNzktNi43LDYuNzksMS4xNy42MSw2LjUxLTUuNjcsMzAuMjItLjU1WiIvPgogICAgPHBhdGggY2xhc3M9ImNscy00IiBkPSJNMzkuNjYsODQuNDljMC00LjI2LjYzLTguMzcsMS43OS0xMi4yNWwtLjAyLS4xNC05LjQzLDEuNDMsMS40My05LjQzLTkuNDEtMS41NSw0LjI3LTguNTItNy4zLTMuNzgtMTYuMjksMTQuMThMMCw5NC4yOGwxNS41OCwyNS45LDI4LjU5LDkuODIsMTguOTYtNy4yOWMtMTMuOTMtNy4wOC0yMy40Ny0yMS41My0yMy40Ny0zOC4yMloiLz4KICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTI0LjAyLDYyLjU1bDkuNDEsMS41NS0xLjQzLDkuNDMsOS40My0xLjQzLjAyLjE0YzMuMi0xMC43NSwxMC41LTE5LjczLDIwLjEtMjUuMTJsLTMuODItMy4wOS0zMC4yMi41NS02LjUxLDUuNjcsNy4zLDMuNzgtNC4yNyw4LjUyWiIvPgogICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTAyLjUyLDQ2LjU5bDMuMDEsMy4wNS04LjQ3LDQuMzksNC4yNyw4LjUyLTkuNDEsMS41NSwxLjQzLDkuNDMtOS40My0xLjQzLS40MywyLjU5LDMuNTEsMTguMDEtMTQuNjQsMjYuNDUtOS4yNSwzLjU2YzUuODIsMi45NiwxMi40LDQuNjQsMTkuMzgsNC42NCwyMy42NywwLDQyLjg1LTE5LjE5LDQyLjg1LTQyLjg1LDAtMTYuNDQtOS4yNi0zMC43MS0yMi44NS0zNy45WiIvPgogICAgPHBhdGggY2xhc3M9ImNscy01IiBkPSJNNjEuNTQsNDcuMTJsMTkuNjgsMTUuOTIsMi4yNywxMS42NS40My0yLjU5LDkuNDMsMS40My0xLjQzLTkuNDMsOS40MS0xLjU1LTQuMjctOC41Miw4LjQ3LTQuMzktMy4wMS0zLjA1Yy01Ljk3LTMuMTYtMTIuNzgtNC45Ni0yMC4wMS00Ljk2LTcuNjIsMC0xNC43NywyLTIwLjk3LDUuNDlaIi8+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTciIGQ9Ik04Ny4wMiw5Mi43bC0zLjUxLTE4LjAxLTEuMTMsNi44Mi04LjUyLTQuMjctNC4zOSw4LjQ3LTYuNzktNi43LTYuNzksNi43LTQuMzktOC40Ny04LjUyLDQuMjctMS41My05LjI3Yy0xLjE2LDMuODgtMS43OSw3Ljk5LTEuNzksMTIuMjUsMCwxNi42OSw5LjU1LDMxLjE0LDIzLjQ3LDM4LjIybDkuMjUtMy41NiwxNC42NC0yNi40NVoiLz4KICAgIDxwYXRoIGNsYXNzPSJjbHMtMyIgZD0iTTYxLjU0LDQ3LjEyYy05LjU5LDUuNC0xNi45LDE0LjM3LTIwLjEsMjUuMTJsMS41Myw5LjI3LDguNTItNC4yNyw0LjM5LDguNDcsNi43OS02LjcsNi43OSw2LjcsNC4zOS04LjQ3LDguNTIsNC4yNywxLjEzLTYuODItMi4yNy0xMS42NS0xOS42OC0xNS45MloiLz4KICA8L2c+Cjwvc3ZnPg==" alt="IDEATECH" height="30" width="196"><span class="issuer">ご支援先向け資料</span></div>
+      <h1><span class="nb">LLMO対策の</span><span class="nb">教科書</span></h1>
+      <p class="subtitle"><span class="nb">意味集合で、</span><span class="nb">生成AIの第一想起を取りにいく</span></p>
+      <div class="abstract">
+        <h2>要旨</h2>
+        <p>生成AIが企業や製品を推薦するかどうかは、文章の書き方ではなく、質問の意味と企業の意味がどれだけ重なるかで決まる。本書は、Transformerの推論・検索・学習という公開された仕組みからこの「意味集合」の考え方を導き、BtoB企業が生成AIの候補に入り、選ばれるための発信を設計する。結論は三つある。AI検索で選ばれるかどうかは、生成の前段にある意味のふるいで決まる。AIの記憶は、一般名詞と自社名の双方向の共起と、意味集合の語との共起によって形づくられる。そしてその共起は、第三者目線の完結した文で、別々に書かれた複数の文章として、続けて積む必要がある。</p>
+      </div>
+    </div>
+    <div class="cover-side">
+      <svg viewBox="0 0 360 290" role="img" aria-label="自社のベクトルが、発信の積み重ねによってカテゴリの意味集合の方向へ回っていく模式図">
+        <defs>
+          <marker id="cv-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path class="s-ah-a" d="M0 0L10 5L0 10z"/></marker>
+          <marker id="cv-m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path class="s-ah-m" d="M0 0L10 5L0 10z"/></marker>
+          <marker id="cv-g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path class="s-ah" d="M0 0L10 5L0 10z"/></marker>
+        </defs>
+        <line class="s-ln" x1="30" y1="262" x2="340" y2="262"/>
+        <line class="s-ln" x1="30" y1="262" x2="30" y2="20"/>
+        <ellipse cx="236" cy="92" rx="104" ry="56" class="s-zone s-dash"/>
+        <text class="s-ts" x="236" y="28" text-anchor="middle">カテゴリの意味集合</text>
+        <circle class="s-dot" cx="182" cy="76" r="3.5"/><circle class="s-dot" cx="262" cy="64" r="3.5"/>
+        <circle class="s-dot" cx="214" cy="118" r="3.5"/><circle class="s-dot" cx="292" cy="110" r="3.5"/>
+        <circle class="s-dot" cx="246" cy="92" r="3.5"/>
+        <line class="s-ln-m" stroke-width="2.4" x1="30" y1="262" x2="232" y2="100" marker-end="url(#cv-m)"/>
+        <text class="s-tm" x="146" y="156" text-anchor="end">文脈</text>
+        <line class="s-ln" stroke-width="2" x1="30" y1="262" x2="318" y2="214" marker-end="url(#cv-g)"/>
+        <text class="s-tc" x="252" y="246">自社（いま）</text>
+        <line class="s-ln-a s-dash" stroke-width="2" x1="30" y1="262" x2="296" y2="150" marker-end="url(#cv-a)"/>
+        <text class="s-ta" x="300" y="170">自社（次）</text>
+      </svg>
+      <dl class="meta">
+        <dt>発行</dt><dd>2026年10月　第1版</dd>
+        <dt>発行者</dt><dd>株式会社IDEATECH</dd>
+        <dt>対象</dt><dd>ご支援先の広報・マーケティングご担当者</dd>
+        <dt>構成</dt><dd>全7章、参考文献16件</dd>
+      </dl>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+  <nav class="toc" aria-label="目次">
+    <p>目次</p>
+    <ol>
+      <li><a href="#preface">はじめに</a></li>
+      <li><a href="#ch1">第1章　仕様と仕組み</a></li>
+      <li><a href="#ch2">第2章　推論</a></li>
+      <li><a href="#ch3">第3章　AI検索</a></li>
+      <li><a href="#ch4">第4章　学習</a></li>
+      <li><a href="#ch5">第5章　積み込み方</a></li>
+      <li><a href="#ch6">第6章　IDEATECHの進め方</a></li>
+      <li><a href="#ch7">第7章　よくある誤解</a></li>
+      <li><a href="#outro">おわりに</a></li>
+      <li><a href="#refs">参考文献</a></li>
+      <li><a href="#terms">用語集</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <details class="toc-m"><summary>目次</summary><ol>
+      <li><a href="#preface">はじめに</a></li>
+      <li><a href="#ch1">第1章　仕様と仕組み</a></li>
+      <li><a href="#ch2">第2章　推論</a></li>
+      <li><a href="#ch3">第3章　AI検索</a></li>
+      <li><a href="#ch4">第4章　学習</a></li>
+      <li><a href="#ch5">第5章　積み込み方</a></li>
+      <li><a href="#ch6">第6章　IDEATECHの進め方</a></li>
+      <li><a href="#ch7">第7章　よくある誤解</a></li>
+      <li><a href="#outro">おわりに</a></li>
+      <li><a href="#refs">参考文献</a></li>
+      <li><a href="#terms">用語集</a></li>
+    </ol></details>
+    <section class="chapter" id="preface">
+      <h2>はじめに</h2>
+      <p>生成AIに「おすすめの経費精算システムは？」と尋ねたとき、自社の名前が挙がるかどうか。BtoB企業の広報やマーケティングにとって、この問いはここ1〜2年で急速に重みを増した。</p>
+      <p>その対策として語られるLLMO（大規模言語モデル最適化）には、FAQ形式にする、構造化データを入れるといった、SEOの延長にある手法が多い。本書はその立場をとらない。AIが社名を挙げるかどうかは、文章の書き方ではなく、質問の意味と社名の意味がどれだけ重なっているかで決まる。この「意味集合」の考え方から発信を設計し直すことが、本書の目的である。</p>
+      <p>第1章から第4章では、言語モデルの推論・検索・学習の仕組みを、公開された研究にもとづいて説明する。第5章で書き方を、第6章でIDEATECHがご支援先の皆さまと進める手順を示す。数式は理解の補助として置いた。読み飛ばしても、各章の結論は追える。</p>
+      <p>理論の骨格は、株式会社トドオナダとの議論と同社の資料<a class="cite" href="#r16">[16]</a>に多くを負っている。そのうえで主要な主張を研究文献で確かめ、IDEATECHの実務と結びつけて再構成した。同社の独自調査にもとづく数値は、その旨を本文に明記している。</p>
+    </section>
+
+    <section class="chapter" id="ch1">
+      <p class="ch-no">第1章</p>
+      <h2>SEOは仕様が相手、LLMOは仕組みが相手</h2>
+      <p class="lead">SEOとLLMOでは、対策の相手が根本から違う。SEOは非公開の仕様を外から推測する仕事であり、LLMOは公開された仕組みから逆算する仕事である。</p>
+      <p>SEOの相手は、検索エンジン企業のランキング仕様である。計算式は公開されず、予告なく変わる。そのため、施策を打って順位を観測し、効いたものを推定するという外からの仮説検証を繰り返すしかなかった。</p>
+      <p>LLMOの相手は、論文として公開された仕組みである。現在の大規模言語モデルはTransformer<a class="cite" href="#r4">[4]</a>を土台にしており、アテンション、MLP、次語予測、誤差逆伝播といった構成要素はすべて論文で公開されている。学習データの作り方も、Common Crawlの利用、品質フィルタ、MinHashによる重複除去といった手順が論文に記載されている<a class="cite" href="#r6">[6]</a><a class="cite" href="#r15">[15]</a>。各社の最新モデルの学習データや重みは公開されていないが、原理は共通している。</p>
+      <p>だからLLMOでは、仕組みから逆算して書き、計測は「狙いどおりに効いたか」を確かめるために使う。キーワードの出現頻度、被リンク、構造化データといったSEOの経験則は、相手が違うため、そのままでは成り立たない。</p>
+      <figure>
+        <div class="tbl">
+          <table>
+            <thead><tr><th>観点</th><th>SEO</th><th>LLMO</th></tr></thead>
+            <tbody>
+              <tr><td data-label="観点">対策の相手</td><td data-label="SEO">検索エンジン企業のランキング仕様</td><td data-label="LLMO">論文で公開されたTransformerと学習の仕組み</td></tr>
+              <tr><td data-label="観点">公開の度合い</td><td data-label="SEO">計算式は非公開で、予告なく変わる</td><td data-label="LLMO">構成要素と学習データの作り方は論文で公開。各社の最新モデルの詳細は非公開</td></tr>
+              <tr><td data-label="観点">対策の組み立て</td><td data-label="SEO">施策、順位の観測、効果の推定を繰り返す</td><td data-label="LLMO">仕組みから逆算して書く</td></tr>
+              <tr><td data-label="観点">計測の役割</td><td data-label="SEO">効いた施策を探す</td><td data-label="LLMO">狙いどおりに効いたかを確かめる</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <figcaption><b>表1-1</b>SEOとLLMOの違い</figcaption>
+      </figure>
+      <aside class="points"><p class="h">この章の要点</p><p>LLMOの相手は、公開された仕組みである。仕組みから逆算して書き、計測で確かめる。SEOの経験則をそのまま持ち込まない。</p></aside>
+    </section>
+
+    <section class="chapter" id="ch2">
+      <p class="ch-no">第2章</p>
+      <h2>推論：AIはどう答えを出すか</h2>
+      <p class="lead">AIが社名を挙げるかどうかは、質問の意味集合と社名の意味集合の一致度で決まる。社名が選ばれる前に、まず質問の意味が組み立てられる。</p>
+
+      <h3><span class="sec">2.1</span>意味集合：語は「連想のセット」として表される</h3>
+      <p>言語学には「分布仮説」という考え方がある。語の意味は、その語と共に現れる語によって決まる、というものだ<a class="cite" href="#r1">[1]</a>。ファースが残した「語はその交友関係によって知られる（You shall know a word by the company it keeps）」という一文がよく知られている<a class="cite" href="#r2">[2]</a>。</p>
+      <p>言語モデルは、この仮説を数値で実装している。各語（正確にはトークン）は数千次元のベクトルとして表され、GPT-3の最大モデルでは1トークンが12,288次元で表現される<a class="cite" href="#r6">[6]</a>。近い文脈で使われる語ほど、ベクトル空間の中で近い位置に置かれる<a class="cite" href="#r3">[3]</a>。本書では、ある語に結びついた連想のまとまりを「意味集合」と呼ぶ。「経費精算システム」であれば、電子帳簿保存法、インボイス制度、承認フロー、会計ソフト連携といった語がその中身になる。</p>
+      <p>二つのベクトルの近さは、なす角の余弦（コサイン類似度）で測る。</p>
+      <div class="eq" role="math" aria-label="コサインシータは、aとbの内積を、aのノルムとbのノルムの積で割ったもの">
+        <span class="eq-body"><span class="fn">cos</span>&#8201;<i>θ</i>&#8194;=&#8194;<span class="frac"><span><b>a</b>&#8201;·&#8201;<b>b</b></span><span><span class="nrm"><b>a</b></span>&#8201;<span class="nrm"><b>b</b></span></span></span></span>
+        <span class="eq-no">(2.1)</span>
+      </div>
+      <p class="eq-def">値は −1 から 1 をとり、1 に近いほど意味が近い。以降で「一致度」と呼ぶのは、この近さのことである。</p>
+
+      <h3><span class="sec">2.2</span>質問の意味が、最終位置に集まる</h3>
+      <p>「おすすめの経費精算システムは」と入力されると、AIは文をトークンに分け、各位置で知識を付け加えていく。この役割を担うのがMLP（多層パーセプトロン）で、事実の結びつきが中間層のMLPに蓄えられていることが研究で示されている<a class="cite" href="#r7">[7]</a><a class="cite" href="#r8">[8]</a>。</p>
+      <p>次に、アテンションが各位置の意味を、重みに応じて最終位置へ集める<a class="cite" href="#r4">[4]</a>。</p>
+      <div class="eq" role="math" aria-label="アテンションは、QとKの転置の積をdkの平方根で割り、ソフトマックスをとってVを掛けたもの">
+        <span class="eq-body"><span class="fn">Attention</span>(<i>Q</i>,&#8201;<i>K</i>,&#8201;<i>V</i>)&#8194;=&#8194;<span class="fn">softmax</span><span class="bigp">(</span><span class="frac"><span><i>QK</i><sup>⊤</sup></span><span>√<span class="ov"><i>d</i><sub><i>k</i></sub></span></span></span><span class="bigp">)</span><i>V</i></span>
+        <span class="eq-no">(2.2)</span>
+      </div>
+      <p class="eq-def"><i>Q</i>（クエリ）は「いま何を探しているか」、<i>K</i>（キー）は「各位置が何を持っているか」、<i>V</i>（バリュー）は「その位置が運ぶ内容」を表す。<i>d<sub>k</sub></i> はキーの次元数で、値が大きくなりすぎないよう調整するための定数である。</p>
+      <p>QとKの内積が大きい位置ほど重みが大きくなり、出力はVの加重平均になる。重い語の意味は濃く、軽い語の意味は薄く残る。こうして質問に合わせて絞り込まれた意味集合が「文脈」である。</p>
+      <figure>
+        <div class="fig">
+          <svg class="only-wide" viewBox="0 0 720 330" role="img" aria-label="質問の各位置の意味集合が、アテンションの重みに応じて最終位置に集まる図">
+            <defs><marker id="f21" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto"><path class="s-ah-m" d="M0 0L10 5L0 10z"/></marker></defs>
+            <rect class="s-box-m" x="20" y="20" width="470" height="44" rx="4"/>
+            <text class="s-tb" x="255" y="47" text-anchor="middle">最終位置「は」に集まった意味集合＝文脈</text>
+            <line class="s-ln-m" stroke-width="4" x1="75" y1="118" x2="75" y2="68" marker-end="url(#f21)"/>
+            <line class="s-ln-m" stroke-width="1" x1="195" y1="118" x2="195" y2="68" marker-end="url(#f21)"/>
+            <line class="s-ln-m" stroke-width="6" x1="315" y1="118" x2="315" y2="68" marker-end="url(#f21)"/>
+            <line class="s-ln-m" stroke-width="1.6" x1="435" y1="118" x2="435" y2="68" marker-end="url(#f21)"/>
+            <rect class="s-box" x="20" y="120" width="110" height="196" rx="4"/>
+            <text class="s-tb" x="75" y="146" text-anchor="middle">おすすめ</text><text class="s-ts" x="75" y="166" text-anchor="middle">重み 0.35</text>
+            <rect class="s-box-g" x="30" y="180" width="90" height="24" rx="3"/><text class="s-tc" x="75" y="196" text-anchor="middle">推奨</text>
+            <rect class="s-box-g" x="30" y="210" width="90" height="24" rx="3"/><text class="s-tc" x="75" y="226" text-anchor="middle">人気</text>
+            <rect class="s-box-g" x="30" y="240" width="90" height="24" rx="3"/><text class="s-tc" x="75" y="256" text-anchor="middle">比較</text>
+            <rect class="s-box-g" x="30" y="270" width="90" height="24" rx="3"/><text class="s-tc" x="75" y="286" text-anchor="middle">ランキング</text>
+            <rect class="s-box" x="140" y="120" width="110" height="196" rx="4"/>
+            <text class="s-tb" x="195" y="146" text-anchor="middle">の</text><text class="s-ts" x="195" y="166" text-anchor="middle">重み 0.05</text>
+            <rect class="s-box-g" x="150" y="180" width="90" height="24" rx="3"/><text class="s-tc" x="195" y="196" text-anchor="middle">連体修飾</text>
+            <rect class="s-box-g" x="150" y="210" width="90" height="24" rx="3"/><text class="s-tc" x="195" y="226" text-anchor="middle">所属・範囲</text>
+            <rect class="s-box" x="260" y="120" width="110" height="196" rx="4"/>
+            <text class="s-tb" x="315" y="146" text-anchor="middle" style="font-size:13px">経費精算システム</text><text class="s-ts" x="315" y="166" text-anchor="middle">重み 0.50</text>
+            <rect class="s-box-a" x="270" y="180" width="90" height="24" rx="3"/><text class="s-tc" x="315" y="196" text-anchor="middle">電子帳簿保存法</text>
+            <rect class="s-box-a" x="270" y="210" width="90" height="24" rx="3"/><text class="s-tc" x="315" y="226" text-anchor="middle">インボイス</text>
+            <rect class="s-box-a" x="270" y="240" width="90" height="24" rx="3"/><text class="s-tc" x="315" y="256" text-anchor="middle">承認フロー</text>
+            <rect class="s-box-a" x="270" y="270" width="90" height="24" rx="3"/><text class="s-tc" x="315" y="286" text-anchor="middle">会計ソフト連携</text>
+            <rect class="s-box" x="380" y="120" width="110" height="196" rx="4"/>
+            <text class="s-tb" x="435" y="146" text-anchor="middle">は</text><text class="s-ts" x="435" y="166" text-anchor="middle">重み 0.10</text>
+            <rect class="s-box-g" x="390" y="180" width="90" height="24" rx="3"/><text class="s-tc" x="435" y="196" text-anchor="middle">主題提示</text>
+            <rect class="s-box-g" x="390" y="210" width="90" height="24" rx="3"/><text class="s-tc" x="435" y="226" text-anchor="middle">答え待ち</text>
+            <text class="s-tb" x="520" y="100">集まった意味集合</text>
+            <text class="s-ts" x="520" y="118">濃さ＝重み</text>
+            <g><rect class="s-box-a" x="520" y="132" width="88" height="24" rx="3"/><text class="s-tc" x="564" y="148" text-anchor="middle">電子帳簿保存法</text>
+            <rect class="s-box-a" x="614" y="132" width="88" height="24" rx="3"/><text class="s-tc" x="658" y="148" text-anchor="middle">インボイス</text>
+            <rect class="s-box-a" x="520" y="162" width="88" height="24" rx="3"/><text class="s-tc" x="564" y="178" text-anchor="middle">承認フロー</text>
+            <rect class="s-box-a" x="614" y="162" width="88" height="24" rx="3"/><text class="s-tc" x="658" y="178" text-anchor="middle">会計ソフト連携</text></g>
+            <g opacity=".75"><rect class="s-box" x="520" y="192" width="88" height="24" rx="3"/><text class="s-tc" x="564" y="208" text-anchor="middle">推奨</text>
+            <rect class="s-box" x="614" y="192" width="88" height="24" rx="3"/><text class="s-tc" x="658" y="208" text-anchor="middle">人気</text>
+            <rect class="s-box" x="520" y="222" width="88" height="24" rx="3"/><text class="s-tc" x="564" y="238" text-anchor="middle">比較</text>
+            <rect class="s-box" x="614" y="222" width="88" height="24" rx="3"/><text class="s-tc" x="658" y="238" text-anchor="middle">ランキング</text></g>
+            <g opacity=".35"><rect class="s-box" x="520" y="252" width="88" height="24" rx="3"/><text class="s-tc" x="564" y="268" text-anchor="middle">連体修飾</text>
+            <rect class="s-box" x="614" y="252" width="88" height="24" rx="3"/><text class="s-tc" x="658" y="268" text-anchor="middle">主題提示</text></g>
+            <text class="s-ts" x="520" y="304">加重平均で、重い語ほど濃く残る</text>
+          </svg>
+<svg class="only-narrow" viewBox="0 0 360 378" role="img" aria-label="質問の各位置の意味集合が、重みに応じて最終位置に集まる図"><defs><marker id="n21" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path class="s-ah-m" d="M0 0L10 5L0 10z"/></marker></defs><rect class="s-box-m" x="12" y="10" width="336" height="40" rx="4"/><text class="n-tb" x="180" y="36" text-anchor="middle">最終位置「は」に集まった意味集合</text><line class="s-ln-m" stroke-width="4" x1="51" y1="96" x2="51" y2="54" marker-end="url(#n21)"/><rect class="s-box" x="12" y="98" width="78" height="82" rx="4"/><text class="n-tb" x="51" y="132" text-anchor="middle">おすすめ</text><text class="n-ts" x="51" y="168" text-anchor="middle">重み 0.35</text><line class="s-ln-m" stroke-width="1" x1="137" y1="96" x2="137" y2="54" marker-end="url(#n21)"/><rect class="s-box" x="98" y="98" width="78" height="82" rx="4"/><text class="n-tb" x="137" y="132" text-anchor="middle">の</text><text class="n-ts" x="137" y="168" text-anchor="middle">重み 0.05</text><line class="s-ln-m" stroke-width="6" x1="223" y1="96" x2="223" y2="54" marker-end="url(#n21)"/><rect class="s-box" x="184" y="98" width="78" height="82" rx="4"/><text class="n-tb" x="223" y="124" text-anchor="middle">経費精算</text><text class="n-tb" x="223" y="144" text-anchor="middle">システム</text><text class="n-ts" x="223" y="168" text-anchor="middle">重み 0.50</text><line class="s-ln-m" stroke-width="1.6" x1="309" y1="96" x2="309" y2="54" marker-end="url(#n21)"/><rect class="s-box" x="270" y="98" width="78" height="82" rx="4"/><text class="n-tb" x="309" y="132" text-anchor="middle">は</text><text class="n-ts" x="309" y="168" text-anchor="middle">重み 0.10</text><text class="n-tb" x="12" y="214">集まった意味集合（濃さ＝重み）</text><g><rect class="s-box-a" x="12" y="226" width="104" height="28" rx="3"/><text class="n-tc" x="64" y="245" text-anchor="middle">電子帳簿保存法</text></g><g><rect class="s-box-a" x="128" y="226" width="104" height="28" rx="3"/><text class="n-tc" x="180" y="245" text-anchor="middle">インボイス</text></g><g><rect class="s-box-a" x="244" y="226" width="104" height="28" rx="3"/><text class="n-tc" x="296" y="245" text-anchor="middle">承認フロー</text></g><g><rect class="s-box-a" x="12" y="262" width="104" height="28" rx="3"/><text class="n-tc" x="64" y="281" text-anchor="middle">会計ソフト連携</text></g><g opacity=".75"><rect class="s-box" x="128" y="262" width="104" height="28" rx="3"/><text class="n-tc" x="180" y="281" text-anchor="middle">推奨</text></g><g opacity=".75"><rect class="s-box" x="244" y="262" width="104" height="28" rx="3"/><text class="n-tc" x="296" y="281" text-anchor="middle">人気</text></g><g opacity=".75"><rect class="s-box" x="12" y="298" width="104" height="28" rx="3"/><text class="n-tc" x="64" y="317" text-anchor="middle">比較</text></g><g opacity=".75"><rect class="s-box" x="128" y="298" width="104" height="28" rx="3"/><text class="n-tc" x="180" y="317" text-anchor="middle">ランキング</text></g><g opacity=".35"><rect class="s-box" x="244" y="298" width="104" height="28" rx="3"/><text class="n-tc" x="296" y="317" text-anchor="middle">連体修飾</text></g><g opacity=".35"><rect class="s-box" x="12" y="334" width="104" height="28" rx="3"/><text class="n-tc" x="64" y="353" text-anchor="middle">主題提示</text></g><text class="n-ts" x="128" y="345">重い語ほど濃く残る</text></svg>
+        </div>
+        <figcaption><b>図2-1</b>質問の各位置の意味集合が、アテンションの重みに応じて最終位置に集まる。重みの数値は説明のための例。</figcaption>
+      </figure>
+      <p>この時点で、社名はまだ一つも出ていない。AIはまず質問の意味を組み立て、その後で社名を選ぶ。</p>
+
+      <h3><span class="sec">2.3</span>次の1語は、文脈と社名の一致度で決まる</h3>
+      <p>最終位置に集まった文脈ベクトル <b>h</b> と、各語の出力側ベクトル <b>e</b><sub><i>w</i></sub> の内積を <i>z<sub>w</sub></i> と書き、ロジット（確率にする前の点数）と呼ぶ。次の1語の確率は、ロジットをソフトマックス関数で正規化して求める。</p>
+      <div class="eq" role="math" aria-label="次の語wの確率は、zwの指数を、すべての語のzの指数の和で割ったもの。zwはhとewの内積">
+        <span class="eq-body"><i>P</i>(<i>w</i>&#8201;|&#8201;<i>x</i><sub>&lt;<i>t</i></sub>)&#8194;=&#8194;<span class="frac"><span><span class="fn">exp</span>(<i>z<sub>w</sub></i>)</span><span><span class="sum"><span class="sg">Σ</span><span class="lim"><i>v</i></span></span><span class="fn">exp</span>(<i>z<sub>v</sub></i>)</span></span>,&#8195;<i>z<sub>w</sub></i>&#8194;=&#8194;<b>h</b>&#8201;·&#8201;<b>e</b><sub><i>w</i></sub></span>
+        <span class="eq-no">(2.3)</span>
+      </div>
+      <p class="eq-def"><i>x</i><sub>&lt;<i>t</i></sub> はそれまでに入力・生成された語の列、<i>v</i> は語彙のすべての語を表す。</p>
+      <p>文脈と向きが近い社名ほど、次の語として選ばれやすい。言い換えの語でも向きが近ければ重なるため、「承認ワークフロー」と書いてきた社名が、「承認フロー」を含む質問の文脈と一致することもある。逆に、属性の語と一度も結びついていない社名は、どの文脈とも重ならない。</p>
+      <figure>
+        <div class="fig">
+          <svg class="only-wide" viewBox="0 0 720 320" role="img" aria-label="文脈ベクトルとA社、B社、自社のベクトルの関係を2次元に描いた模式図">
+            <defs>
+              <marker id="f22a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto"><path class="s-ah-a" d="M0 0L10 5L0 10z"/></marker>
+              <marker id="f22m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto"><path class="s-ah-m" d="M0 0L10 5L0 10z"/></marker>
+              <marker id="f22g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto"><path class="s-ah" d="M0 0L10 5L0 10z"/></marker>
+            </defs>
+            <line class="s-ln" x1="50" y1="280" x2="430" y2="280"/>
+            <line class="s-ln" x1="50" y1="280" x2="50" y2="24"/>
+            <line class="s-ln-m" stroke-width="2.6" x1="50" y1="280" x2="300" y2="64" marker-end="url(#f22m)"/>
+            <text class="s-tm" x="308" y="62">文脈</text>
+            <line class="s-ln-a" stroke-width="2.6" x1="50" y1="280" x2="340" y2="108" marker-end="url(#f22a)"/>
+            <text class="s-ta" x="348" y="108">A社</text>
+            <line class="s-ln-a" stroke-width="2" opacity=".55" x1="50" y1="280" x2="380" y2="176" marker-end="url(#f22a)"/>
+            <text class="s-ta" x="388" y="178" opacity=".8">B社</text>
+            <line class="s-ln" stroke-width="2" x1="50" y1="280" x2="400" y2="244" marker-end="url(#f22g)"/>
+            <text class="s-tb" x="408" y="248">自社</text>
+            <circle class="s-dot-g" cx="50" cy="280" r="4"/>
+            <text class="s-ts" x="50" y="306">空の社名：属性の語がなく、向きも長さも定まらない</text>
+            <text class="s-tb" x="470" y="60">文脈との一致度（イメージ）</text>
+            <text class="s-t" x="470" y="102">A社</text><rect class="s-bar-a" x="540" y="90" width="140" height="16"/><text class="s-ts" x="686" y="103">大</text>
+            <text class="s-t" x="470" y="142">B社</text><rect class="s-bar-a" opacity=".55" x="540" y="130" width="90" height="16"/><text class="s-ts" x="636" y="143">中</text>
+            <text class="s-t" x="470" y="182">自社</text><rect class="s-bar-g" x="540" y="170" width="30" height="16"/><text class="s-ts" x="576" y="183">小</text>
+            <text class="s-t" x="470" y="222">空の社名</text><rect class="s-bar-g" x="540" y="210" width="3" height="16"/><text class="s-ts" x="550" y="223">0</text>
+            <text class="s-ts" x="470" y="262">向きが近いほど、一致度が大きい</text>
+          </svg>
+<svg class="only-narrow" viewBox="0 0 360 436" role="img" aria-label="文脈ベクトルと各社名ベクトルの関係の模式図"><defs><marker id="n22a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path class="s-ah-a" d="M0 0L10 5L0 10z"/></marker><marker id="n22m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path class="s-ah-m" d="M0 0L10 5L0 10z"/></marker><marker id="n22g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path class="s-ah" d="M0 0L10 5L0 10z"/></marker></defs>
+<line class="s-ln" x1="24" y1="250" x2="344" y2="250"/><line class="s-ln" x1="24" y1="250" x2="24" y2="14"/>
+<line class="s-ln-m" stroke-width="2.6" x1="24" y1="250" x2="206" y2="44" marker-end="url(#n22m)"/><text class="n-tm" x="212" y="44">文脈</text>
+<line class="s-ln-a" stroke-width="2.6" x1="24" y1="250" x2="250" y2="88" marker-end="url(#n22a)"/><text class="n-ta" x="256" y="90">A社</text>
+<line class="s-ln-a" stroke-width="2" opacity=".55" x1="24" y1="250" x2="282" y2="154" marker-end="url(#n22a)"/><text class="n-ta" x="288" y="158" opacity=".8">B社</text>
+<line class="s-ln" stroke-width="2" x1="24" y1="250" x2="298" y2="216" marker-end="url(#n22g)"/><text class="n-tb" x="304" y="222">自社</text>
+<circle class="s-dot-g" cx="24" cy="250" r="4"/>
+<text class="n-ts" x="12" y="278">空の社名：属性の語がなく、向きも長さも定まらない</text>
+<text class="n-tb" x="12" y="318">文脈との一致度（イメージ）</text>
+<text class="n-t" x="12" y="347">A社</text><rect class="s-bar-a" x="96" y="334" width="200" height="16"/><text class="n-ts" x="302" y="347">大</text>
+<text class="n-t" x="12" y="375">B社</text><rect class="s-bar-a" opacity=".55" x="96" y="362" width="130" height="16"/><text class="n-ts" x="232" y="375">中</text>
+<text class="n-t" x="12" y="403">自社</text><rect class="s-bar-g" x="96" y="390" width="44" height="16"/><text class="n-ts" x="146" y="403">小</text>
+<text class="n-t" x="12" y="431">空の社名</text><rect class="s-bar-g" x="96" y="418" width="3" height="16"/><text class="n-ts" x="105" y="431">0</text>
+</svg>
+        </div>
+        <figcaption><b>図2-2</b>文脈ベクトルと各社名ベクトルの関係。実際は数千次元の空間で、ここでは2次元に描いた模式図である。</figcaption>
+      </figure>
+
+      <h3><span class="sec">2.4</span>1語ずつ生成し、EOSで止まる</h3>
+      <p>AIは回答を1語ずつ決める。1語を選ぶたびにそれを入力に加え、全体の処理をやり直す。文末記号（EOS）が選ばれた時点で生成は終わる。助詞や句読点も、1回ずつのループである。</p>
+      <p>このとき、助詞や語尾のような文法の語は浅い段階で強く決まり、社名のような知識の語は中間の段階で決まる、とトドオナダ社は説明している<a class="cite" href="#r16">[16]</a>。事実の結びつきが中間層に蓄えられているという研究結果<a class="cite" href="#r8">[8]</a>とも整合する。AIが自然な文章を書けるのは文法の語の点数が強いからで、社名はその文の中に、知識の点数として差し込まれる。回答に並んだ社名の集まりが「想起集合」であり、ここに入れなかった企業は「その他」として扱われる。</p>
+      <figure>
+        <div class="fig">
+          <svg class="only-wide" viewBox="0 0 720 330" role="img" aria-label="AIが1語ずつ回答を生成し、EOSで止まるまでの流れ">
+            <defs><marker id="f23" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path class="s-ah" d="M0 0L10 5L0 10z"/></marker></defs>
+            <g>
+              <rect class="s-box" x="20" y="16" width="300" height="32" rx="4"/><text class="s-t" x="34" y="37">おすすめの経費精算システムは</text>
+              <line class="s-ln" x1="326" y1="32" x2="354" y2="32" marker-end="url(#f23)"/>
+              <rect class="s-box-a" x="360" y="16" width="72" height="32" rx="4"/><text class="s-ta" x="396" y="37" text-anchor="middle">A社</text>
+              <text class="s-tc" x="448" y="37">知識の語：中間の段階で決まる</text>
+            </g>
+            <g>
+              <rect class="s-box" x="20" y="58" width="300" height="32" rx="4"/><text class="s-t" x="34" y="79">…システムはA社</text>
+              <line class="s-ln" x1="326" y1="74" x2="354" y2="74" marker-end="url(#f23)"/>
+              <rect class="s-box-g" x="360" y="58" width="72" height="32" rx="4"/><text class="s-tb" x="396" y="79" text-anchor="middle">、</text>
+              <text class="s-tc" x="448" y="79">文法の語：浅い段階で決まる</text>
+            </g>
+            <g>
+              <rect class="s-box" x="20" y="100" width="300" height="32" rx="4"/><text class="s-t" x="34" y="121">…A社、</text>
+              <line class="s-ln" x1="326" y1="116" x2="354" y2="116" marker-end="url(#f23)"/>
+              <rect class="s-box-a" x="360" y="100" width="72" height="32" rx="4"/><text class="s-ta" x="396" y="121" text-anchor="middle">B社</text>
+              <text class="s-tc" x="448" y="121">直前の社名が、次の社名を変える</text>
+            </g>
+            <g>
+              <rect class="s-box" x="20" y="142" width="300" height="32" rx="4"/><text class="s-t" x="34" y="163">…A社、B社</text>
+              <line class="s-ln" x1="326" y1="158" x2="354" y2="158" marker-end="url(#f23)"/>
+              <rect class="s-box-g" x="360" y="142" width="72" height="32" rx="4"/><text class="s-tb" x="396" y="163" text-anchor="middle">など</text>
+              <text class="s-tc" x="448" y="163">文法の語：列挙を閉じる</text>
+            </g>
+            <g>
+              <rect class="s-box" x="20" y="184" width="300" height="32" rx="4"/><text class="s-t" x="34" y="205">…B社などが人気です</text>
+              <line class="s-ln" x1="326" y1="200" x2="354" y2="200" marker-end="url(#f23)"/>
+              <rect class="s-box-g" x="360" y="184" width="72" height="32" rx="4"/><text class="s-tb" x="396" y="205" text-anchor="middle">。</text>
+              <text class="s-tc" x="448" y="205">文法の語：文を閉じる</text>
+            </g>
+            <g>
+              <rect class="s-box" x="20" y="226" width="300" height="32" rx="4"/><text class="s-t" x="34" y="247">…が人気です。</text>
+              <line class="s-ln" x1="326" y1="242" x2="354" y2="242" marker-end="url(#f23)"/>
+              <rect class="s-box-m" x="360" y="226" width="72" height="32" rx="4"/><text class="s-tm" x="396" y="247" text-anchor="middle">EOS</text>
+              <text class="s-tc" x="448" y="247">生成を終える</text>
+            </g>
+            <line class="s-ln" x1="20" y1="276" x2="700" y2="276"/>
+            <text class="s-tb" x="20" y="302">回答：A社、B社などが人気です。</text>
+            <text class="s-t" x="270" y="302">想起集合＝A社・B社。自社はこの回答に出ない</text>
+          </svg>
+<svg class="only-narrow" viewBox="0 0 360 468" role="img" aria-label="AIが1語ずつ回答を生成し、EOSで止まるまでの流れ"><defs><marker id="n23" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path class="s-ah" d="M0 0L10 5L0 10z"/></marker></defs><rect class="s-box" x="12" y="10" width="246" height="32" rx="4"/><text class="n-t" x="22" y="31">おすすめの経費精算システムは</text><line class="s-ln" x1="261" y1="26" x2="274" y2="26" marker-end="url(#n23)"/><rect class="s-box-a" x="278" y="10" width="70" height="32" rx="4"/><text class="n-ta" x="313" y="31" text-anchor="middle">A社</text><text class="n-ts" x="22" y="62">知識の語：中間の段階で決まる</text><rect class="s-box" x="12" y="74" width="246" height="32" rx="4"/><text class="n-t" x="22" y="95">…システムはA社</text><line class="s-ln" x1="261" y1="90" x2="274" y2="90" marker-end="url(#n23)"/><rect class="s-box-g" x="278" y="74" width="70" height="32" rx="4"/><text class="n-tb" x="313" y="95" text-anchor="middle">、</text><text class="n-ts" x="22" y="126">文法の語：浅い段階で決まる</text><rect class="s-box" x="12" y="138" width="246" height="32" rx="4"/><text class="n-t" x="22" y="159">…A社、</text><line class="s-ln" x1="261" y1="154" x2="274" y2="154" marker-end="url(#n23)"/><rect class="s-box-a" x="278" y="138" width="70" height="32" rx="4"/><text class="n-ta" x="313" y="159" text-anchor="middle">B社</text><text class="n-ts" x="22" y="190">直前の社名が、次の社名を変える</text><rect class="s-box" x="12" y="202" width="246" height="32" rx="4"/><text class="n-t" x="22" y="223">…A社、B社</text><line class="s-ln" x1="261" y1="218" x2="274" y2="218" marker-end="url(#n23)"/><rect class="s-box-g" x="278" y="202" width="70" height="32" rx="4"/><text class="n-tb" x="313" y="223" text-anchor="middle">など</text><text class="n-ts" x="22" y="254">文法の語：列挙を閉じる</text><rect class="s-box" x="12" y="266" width="246" height="32" rx="4"/><text class="n-t" x="22" y="287">…B社などが人気です</text><line class="s-ln" x1="261" y1="282" x2="274" y2="282" marker-end="url(#n23)"/><rect class="s-box-g" x="278" y="266" width="70" height="32" rx="4"/><text class="n-tb" x="313" y="287" text-anchor="middle">。</text><text class="n-ts" x="22" y="318">文法の語：文を閉じる</text><rect class="s-box" x="12" y="330" width="246" height="32" rx="4"/><text class="n-t" x="22" y="351">…が人気です。</text><line class="s-ln" x1="261" y1="346" x2="274" y2="346" marker-end="url(#n23)"/><rect class="s-box-m" x="278" y="330" width="70" height="32" rx="4"/><text class="n-tm" x="313" y="351" text-anchor="middle">EOS</text><text class="n-ts" x="22" y="382">生成を終える</text><line class="s-ln" x1="12" y1="398" x2="348" y2="398"/><text class="n-tb" x="12" y="424">回答：A社、B社などが人気です。</text><text class="n-tc" x="12" y="450">想起集合＝A社・B社（自社は出ない）</text></svg>
+        </div>
+        <figcaption><b>図2-3</b>回答文と想起集合ができるまで。途中の語の一部は省略している。</figcaption>
+      </figure>
+
+      <h3><span class="sec">2.5</span>ハルシネーションは「正解より文脈に近い語」がある状態</h3>
+      <p>AIがオーストラリアの首都を「シドニー」と答えてしまうのは、この仕組みで説明できる。「首都」の文脈には、政府、中心都市、最大都市、有名といった意味が集まる。シドニーはそのうち三つと重なるが、キャンベラが重なるのは政府だけだ。</p>
+      <p>一方で、「オーストラリアの首都はキャンベラ」という同じ文での共起は、キャンベラのほうが多い。意味の重なりではシドニーが勝ち、同一文の共起ではキャンベラが勝つ。共起の学習が足りないモデルはシドニーと答え、十分なモデルはキャンベラと答える。パリは意味の重なりと共起の両方が大きいため、どのモデルでも正しく出る。</p>
+      <p>共起の効き方は研究でも確かめられている。カンドパルらは、質問の固有名と答えの固有名が同じ文書に現れる回数が多いほど、モデルの正答率が高くなることを、相関と因果の両面から示した<a class="cite" href="#r13">[13]</a>。</p>
+      <p>企業に置き換えると、図2-4の四つの型になる。<span class="mark">目指すのはパリ型、つまり意味の重なりと一般名詞との共起の両方を持つ状態である。</span></p>
+      <figure>
+        <div class="fig">
+          <svg class="only-wide" viewBox="0 0 720 410" role="img" aria-label="意味集合の重なりと一般名詞との同一文の共起で分けた四つの型：パリ型、キャンベラ型、シドニー型、空の社名">
+            <defs><marker id="f24" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path class="s-ah" d="M0 0L10 5L0 10z"/></marker></defs>
+            <text class="s-tb" x="20" y="20">一般名詞との</text>
+            <text class="s-tb" x="20" y="40">同一文の共起</text>
+            <line class="s-ln" x1="122" y1="352" x2="122" y2="26" marker-end="url(#f24)"/>
+            <text class="s-ts" x="112" y="70" text-anchor="end">大</text>
+            <text class="s-ts" x="106" y="350" text-anchor="end">小</text>
+            <line class="s-ln" x1="122" y1="362" x2="664" y2="362" marker-end="url(#f24)"/>
+            <text class="s-ts" x="134" y="382">小</text>
+            <text class="s-ts" x="650" y="382" text-anchor="end">大</text>
+            <text class="s-tb" x="393" y="398" text-anchor="middle">意味集合の重なり</text>
+            <rect class="s-box" x="134" y="30" width="252" height="154" rx="4"/>
+            <text class="s-tb" x="150" y="60">キャンベラ型</text>
+            <text class="s-tc" x="150" y="86">「〇〇といえば？」と直接聞かれれば</text>
+            <text class="s-tc" x="150" y="106">挙がる。条件の多い質問では、</text>
+            <text class="s-tc" x="150" y="126">意味の厚い他社に負ける</text>
+            <text class="s-ts" x="150" y="168">例：キャンベラ</text>
+            <rect class="s-box-a" x="394" y="30" width="256" height="154" rx="4" stroke-width="2"/>
+            <text class="s-ta" x="410" y="60" style="font-size:15px">パリ型（目指す状態）</text>
+            <text class="s-tc" x="410" y="86">直接聞かれても、条件付きで</text>
+            <text class="s-tc" x="410" y="106">聞かれても挙がる</text>
+            <text class="s-ts" x="410" y="168">例：パリ</text>
+            <rect class="s-box-g" x="134" y="192" width="252" height="154" rx="4"/>
+            <text class="s-tb" x="150" y="222">空の社名</text>
+            <text class="s-tc" x="150" y="248">どの文脈とも重ならず、</text>
+            <text class="s-tc" x="150" y="268">候補にならない</text>
+            <text class="s-ts" x="150" y="330">例：属性の語と結びついていない社名</text>
+            <rect class="s-box" x="394" y="192" width="256" height="154" rx="4"/>
+            <text class="s-tb" x="410" y="222">シドニー型</text>
+            <text class="s-tc" x="410" y="248">文脈には近いが、カテゴリ名との</text>
+            <text class="s-tc" x="410" y="268">結びつきが弱い。質問によって</text>
+            <text class="s-tc" x="410" y="288">挙がったり消えたりする</text>
+            <text class="s-ts" x="410" y="330">例：シドニー</text>
+          </svg>
+<svg class="only-narrow" viewBox="0 0 360 462" role="img" aria-label="意味集合の重なりと一般名詞との同一文の共起で分けた四つの型"><defs><marker id="n24" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path class="s-ah" d="M0 0L10 5L0 10z"/></marker></defs><text class="n-tb" x="12" y="18">縦軸：一般名詞との同一文の共起</text><line class="s-ln" x1="36" y1="410" x2="36" y2="30" marker-end="url(#n24)"/><text class="n-ts" x="30" y="48" text-anchor="end">大</text><text class="n-ts" x="30" y="404" text-anchor="end">小</text><rect class="s-box" x="44" y="34" width="148" height="180" rx="4" stroke-width="1"/><text class="n-tb" x="56" y="62">キャンベラ型</text><text class="n-tc" x="56" y="90">直接聞かれれば</text><text class="n-tc" x="56" y="110">挙がるが、条件の</text><text class="n-tc" x="56" y="130">多い質問では意味</text><text class="n-tc" x="56" y="150">の厚い他社に負ける</text><text class="n-ts" x="56" y="200">例：キャンベラ</text><rect class="s-box-a" x="200" y="34" width="148" height="180" rx="4" stroke-width="2"/><text class="n-ta" x="212" y="62">パリ型</text><text class="n-ta" x="212" y="82" style="font-size:13px">目指す状態</text><text class="n-tc" x="212" y="108">どの聞かれ方でも</text><text class="n-tc" x="212" y="128">挙がる</text><text class="n-ts" x="212" y="200">例：パリ</text><rect class="s-box-g" x="44" y="222" width="148" height="180" rx="4" stroke-width="1"/><text class="n-tb" x="56" y="250">空の社名</text><text class="n-tc" x="56" y="278">どの文脈とも</text><text class="n-tc" x="56" y="298">重ならず、</text><text class="n-tc" x="56" y="318">候補にならない</text><text class="n-ts" x="56" y="388">例：属性語なし</text><rect class="s-box" x="200" y="222" width="148" height="180" rx="4" stroke-width="1"/><text class="n-tb" x="212" y="250">シドニー型</text><text class="n-tc" x="212" y="278">文脈には近いが、</text><text class="n-tc" x="212" y="298">カテゴリ名との</text><text class="n-tc" x="212" y="318">結びつきが弱い。</text><text class="n-tc" x="212" y="338">質問によって</text><text class="n-tc" x="212" y="358">出たり消えたりする</text><text class="n-ts" x="212" y="388">例：シドニー</text><line class="s-ln" x1="36" y1="414" x2="350" y2="414" marker-end="url(#n24)"/><text class="n-ts" x="44" y="434">小</text><text class="n-ts" x="348" y="434" text-anchor="end">大</text><text class="n-tb" x="196" y="456" text-anchor="middle">横軸：意味集合の重なり</text></svg>
+        </div>
+        <figcaption><b>図2-4</b>意味集合の重なりと、一般名詞との同一文の共起で見る四つの型。首都の例はトドオナダ社の資料<a class="cite" href="#r16">[16]</a>による。</figcaption>
+      </figure>
+      <aside class="points"><p class="h">この章の要点</p><p>AIは「正しい答え」ではなく「文脈に近い語」を出す。社名が候補になるには、意味集合の重なりと、一般名詞との同一文の共起の両方が要る。</p></aside>
+    </section>
+
+    <section class="chapter" id="ch3">
+      <p class="ch-no">第3章</p>
+      <h2>AI検索：選ばれるかどうかは、渡される前に決まる</h2>
+      <p class="lead">AI検索で選ばれるかどうかは、生成AIに文書が渡される前の「検索と意味のふるい」で決まる。GEOが扱っているのは、その後の狭い工程である。</p>
+
+      <h3><span class="sec">3.1</span>GEO論文が実験したこと</h3>
+      <p>「GEO（生成エンジン最適化）」という言葉は、プリンストン大学などの研究チームがKDD 2024で発表した論文に由来する<a class="cite" href="#r11">[11]</a>。実験では、Google検索の上位5件をAIに渡す文脈として固定し、そのうち1件を「出典を加える」「統計を加える」「引用を加える」「キーワードを詰め込む」など9種類の方法で書き換え、生成された回答でその文書がどれだけ使われたかを測った。</p>
+      <p>結果は、出典・統計・引用の追加で可視性が最大40％程度高まる一方、キーワードの詰め込みは効果が薄く、実在の生成エンジンではむしろ下がった、というものだった。この知見そのものは有用である。ただし実験は、文書が渡されることを前提にしている。検索の候補に入るか、ふるいを通るかという、渡される前の工程は扱っていない。</p>
+
+      <h3><span class="sec">3.2</span>クエリファンアウトとリランカー</h3>
+      <p>AI検索の裏側では、質問がまず複数の検索に分解される。Googleはこれを「クエリファンアウト」と呼び、AI OverviewとAIモードがサブトピックやデータソースをまたいで複数の関連検索を行うことを公式に説明している<a class="cite" href="#r12">[12]</a>。たとえば「海外進出を始めた小規模企業に適した会計ソフトは？」という質問は、多通貨対応、海外送金、中小企業向けといった観点の検索に広げられる。ここで取得されなかった文書は、以降の選抜に参加できない。インデックス登録などSEOの基本は、この入口の前提として残る。</p>
+      <p>集まった候補は、リランカーによって並べ直される。BERTを質問と文書の関連度の判定に使う手法はノゲイラとチョ（2019）に始まり、文書ランキングの標準的な構成になった<a class="cite" href="#r9">[9]</a>。このとき各検索語での順位は捨てられ、元の質問全体との意味の類似度だけで並べ直される。上位の文書だけが、回答を書くAIに渡される。検索で得た文書を生成の文脈に加えるこの方式は、検索拡張生成（RAG）と呼ばれる<a class="cite" href="#r10">[10]</a>。</p>
+      <figure>
+        <div class="fig">
+          <svg class="only-wide" viewBox="0 0 720 310" role="img" aria-label="AI検索の工程。ファンアウト、候補の取得、統合、リランカーを経て約10件が生成AIに渡される。GEOの範囲は最後の工程だけ">
+            <defs>
+              <marker id="f31" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path class="s-ah" d="M0 0L10 5L0 10z"/></marker>
+              <marker id="f31m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto"><path class="s-ah-m" d="M0 0L10 5L0 10z"/></marker>
+            </defs>
+            <rect class="s-zone" x="20" y="40" width="500" height="252" rx="6"/>
+            <text class="s-tb" x="36" y="66">入力側：検索と意味のふるい（生成の前）</text>
+            <text class="s-ts" x="36" y="86">選ばれるかどうかは、ここで決まる</text>
+            <rect class="s-box" x="36" y="104" width="104" height="54" rx="4"/><text class="s-tb" x="88" y="127" text-anchor="middle">ファンアウト</text><text class="s-ts" x="88" y="146" text-anchor="middle">対象を広げる</text>
+            <line class="s-ln" x1="141" y1="131" x2="154" y2="131" marker-end="url(#f31)"/>
+            <rect class="s-box" x="156" y="104" width="104" height="54" rx="4"/><text class="s-tb" x="208" y="127" text-anchor="middle">候補の取得</text><text class="s-ts" x="208" y="146" text-anchor="middle">約1,000件</text>
+            <line class="s-ln" x1="261" y1="131" x2="274" y2="131" marker-end="url(#f31)"/>
+            <rect class="s-box" x="276" y="104" width="104" height="54" rx="4"/><text class="s-tb" x="328" y="127" text-anchor="middle">統合</text><text class="s-ts" x="328" y="146" text-anchor="middle">順位は捨てる</text>
+            <line class="s-ln" x1="381" y1="131" x2="394" y2="131" marker-end="url(#f31)"/>
+            <rect class="s-box-m" x="396" y="104" width="108" height="54" rx="4"/><text class="s-tb" x="450" y="127" text-anchor="middle">リランカー</text><text class="s-tm" x="450" y="146" text-anchor="middle" style="font-size:12px">意味で足切り</text>
+            <text class="s-tc" x="36" y="198">候補 約1,000件</text>
+            <rect class="s-bar-a" opacity=".45" x="150" y="186" width="350" height="16"/>
+            <text class="s-tc" x="36" y="226">渡す 約10件</text>
+            <rect class="s-bar-m" x="150" y="214" width="4" height="16"/>
+            <text class="s-tm" x="164" y="227">約99％がここで落ちる</text>
+            <text class="s-ts" x="36" y="258">検索語ごとの順位は捨てられ、元の質問全体との意味の類似度で並べ直される</text>
+            <text class="s-ts" x="36" y="278">※件数は構造を説明するための仮定値。各社の実測値ではない</text>
+            <line class="s-ln-m" stroke-width="2" x1="522" y1="160" x2="556" y2="160" marker-end="url(#f31m)"/>
+            <text class="s-ts" x="630" y="64" text-anchor="middle">論文の実験はここだけ</text>
+            <text class="s-tm" x="630" y="86" text-anchor="middle">GEOの範囲</text>
+            <rect class="s-box-g" x="560" y="104" width="140" height="112" rx="6"/>
+            <text class="s-tb" x="630" y="134" text-anchor="middle">出力側：生成AI</text>
+            <text class="s-ts" x="630" y="162" text-anchor="middle">渡された約10件から</text>
+            <text class="s-ts" x="630" y="182" text-anchor="middle">回答と引用を選ぶ</text>
+          </svg>
+<svg class="only-narrow" viewBox="0 0 360 522" role="img" aria-label="AI検索の工程とGEOの範囲"><defs><marker id="n31" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path class="s-ah" d="M0 0L10 5L0 10z"/></marker><marker id="n31m" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path class="s-ah-m" d="M0 0L10 5L0 10z"/></marker></defs><rect class="s-zone" x="12" y="10" width="336" height="360" rx="6"/><text class="n-tb" x="24" y="38">入力側：検索と意味のふるい</text><text class="n-ts" x="24" y="58">生成の前。選ばれるかどうかはここで決まる</text><rect class="s-box" x="24" y="74" width="150" height="54" rx="4"/><text class="n-tb" x="99" y="98" text-anchor="middle">① ファンアウト</text><text class="n-ts" x="99" y="118" text-anchor="middle">対象を広げる</text><line class="s-ln" x1="175" y1="101" x2="184" y2="101" marker-end="url(#n31)"/><rect class="s-box" x="186" y="74" width="150" height="54" rx="4"/><text class="n-tb" x="261" y="98" text-anchor="middle">② 候補の取得</text><text class="n-ts" x="261" y="118" text-anchor="middle">約1,000件</text><rect class="s-box" x="24" y="140" width="150" height="54" rx="4"/><text class="n-tb" x="99" y="164" text-anchor="middle">③ 統合</text><text class="n-ts" x="99" y="184" text-anchor="middle">順位は捨てる</text><line class="s-ln" x1="175" y1="167" x2="184" y2="167" marker-end="url(#n31)"/><rect class="s-box-m" x="186" y="140" width="150" height="54" rx="4"/><text class="n-tb" x="261" y="164" text-anchor="middle">④ リランカー</text><text class="n-tm" x="261" y="184" text-anchor="middle">意味で足切り</text><text class="n-tc" x="24" y="222">候補 約1,000件</text><rect class="s-bar-a" opacity=".45" x="24" y="230" width="300" height="14"/><text class="n-tc" x="24" y="268">渡す 約10件</text><rect class="s-bar-m" x="24" y="276" width="4" height="14"/><text class="n-tm" x="36" y="288">約99％がここで落ちる</text><text class="n-ts" x="24" y="318">検索語ごとの順位は捨てられ、元の質問全体</text><text class="n-ts" x="24" y="336">との意味の類似度で並べ直される</text><text class="n-ts" x="24" y="358">※件数は構造説明のための仮定値</text><line class="s-ln-m" stroke-width="2" x1="180" y1="372" x2="180" y2="402" marker-end="url(#n31m)"/><rect class="s-box-g" x="12" y="406" width="336" height="104" rx="6"/><text class="n-tb" x="180" y="436" text-anchor="middle">出力側：生成AI</text><text class="n-tc" x="180" y="462" text-anchor="middle">渡された約10件から回答と引用を選ぶ</text><text class="n-tm" x="180" y="490" text-anchor="middle">GEOの範囲（論文の実験はここだけ）</text></svg>
+        </div>
+        <figcaption><b>図3-1</b>AI検索の工程とGEOの範囲。工程の構成はトドオナダ社の資料<a class="cite" href="#r16">[16]</a>をもとに作図した。</figcaption>
+      </figure>
+      <p>仮に上位50件を渡す実装であっても、候補の95％はふるいで落ちる。「AIに選ばれる」かどうかの大部分は、生成AIが関与しない入力側の工程で決まっている。</p>
+
+      <h3><span class="sec">3.3</span>LLMとBERTは、同じ原理で絞り込む</h3>
+      <p>リランカーに使われるBERTは、文の前後両方向から意味を読むエンコーダー型のTransformerである<a class="cite" href="#r5">[5]</a>。回答を書くGPTのようなLLMは、左から右へ1語ずつ生成するデコーダー型である。構造は違うが、どちらも文脈の意味集合との一致度で候補を絞る点は同じだ。比べる相手が社名か文書かが違うにすぎない。</p>
+      <figure>
+        <div class="cols">
+          <div class="card m">
+            <h4>LLM：想起（回答の生成）</h4>
+            <p class="k">比べる相手は、各社名の意味集合</p>
+            <ol>
+              <li>質問「おすすめの経費精算システムは」の意味が最終位置に集まる</li>
+              <li>各社名の意味集合と一致度を比べる</li>
+              <li>一致度の高い社名を次の語に選ぶ。想起集合に入るか、入らないか</li>
+            </ol>
+          </div>
+          <div class="card a">
+            <h4>BERT系リランカー：選抜（AI検索）</h4>
+            <p class="k">比べる相手は、各文書の意味集合</p>
+            <ol>
+              <li>質問「海外進出した小規模企業の会計ソフト」の意味をつかむ</li>
+              <li>各文書の意味集合と一致度を採点する</li>
+              <li>一致度の高い文書だけを生成AIに渡す。足切りを通るか、落ちるか</li>
+            </ol>
+          </div>
+        </div>
+        <figcaption><b>図3-2</b>LLMもBERTも、Transformer（アテンションとMLP）を土台に、文脈の意味集合との一致度で絞り込む。モデルが違えば数値は違うが、意味で絞る仕組みは同じである。</figcaption>
+      </figure>
+      <p>このため、意味集合が薄いブランドや文書は、どちらの工程でも残らない。想起にもAI検索にも、同じ意味集合対策が効く。</p>
+
+      <h3><span class="sec">3.4</span>成果は二つに分けて測る</h3>
+      <p>同じ発信が、検索時の選抜と、将来のモデルの事前学習の両方に効く。ただし工程が違うため、測り方も分ける。検索時の選抜は、AI検索での引用や掲載で測る。事前学習は、次のモデルの想起集合に入るかで測る。一方の成果で、他方を説明しない。</p>
+      <p>なお、Googleは、AI OverviewやAIモードに表示されるための追加要件や特別な最適化はないと明言している<a class="cite" href="#r12">[12]</a>。AI Overviewは検索順位を前提にするぶんSEOに近く、対話型AIで候補を尋ねられる場面は学習の比重が大きいぶんPRに近い。IDEATECHがBtoBの意思決定に影響する対話型AIに重心を置くのは、このためである。ただし、どちらも最後は意味で選ばれる。</p>
+      <aside class="points"><p class="h">この章の要点</p><p>GEOが扱うのは、文書が渡された後の工程だけである。選ばれるかどうかは、渡される前の意味のふるいで決まる。成果は検索時と事前学習に分けて測る。</p></aside>
+    </section>
+
+    <section class="chapter" id="ch4">
+      <p class="ch-no">第4章</p>
+      <h2>学習：AIの記憶はどう作られるか</h2>
+      <p class="lead">AIの記憶は、予想が外れた分だけ、少しずつ書き換えられる。社名を想起させるのは、一般名詞と同じ文で何度も語られた記録である。</p>
+
+      <h3><span class="sec">4.1</span>予想と実際の突き合わせ</h3>
+      <p>事前学習でAIがしていることは、文章の各位置で次の語を予想し、実際の語と突き合わせることに尽きる。学習の目的は、次の損失を小さくすることにある。</p>
+      <div class="eq" role="math" aria-label="損失Lは、各位置tについて、実際の語xtの確率の対数を足し合わせ、符号を反転したもの">
+        <span class="eq-body">ℒ&#8194;=&#8194;−<span class="sum"><span class="sg">Σ</span><span class="lim"><i>t</i></span></span><span class="fn">log</span>&#8201;<i>P</i>(<i>x<sub>t</sub></i>&#8201;|&#8201;<i>x</i><sub>&lt;<i>t</i></sub>)</span>
+        <span class="eq-no">(4.1)</span>
+      </div>
+      <p class="eq-def">実際に現れた語 <i>x<sub>t</sub></i> に高い確率を付けられていれば損失は小さく、低ければ大きい。</p>
+      <p>予想が外れた大きさは、ロジットについての勾配として表される。</p>
+      <div class="eq" role="math" aria-label="損失のロジットzwについての偏微分は、語wの予想確率から、wが正解なら1、そうでなければ0を引いたもの">
+        <span class="eq-body"><span class="frac"><span>∂ℒ</span><span>∂<i>z<sub>w</sub></i></span></span>&#8194;=&#8194;<i>P</i>(<i>w</i>&#8201;|&#8201;<i>x</i><sub>&lt;<i>t</i></sub>)&#8194;−&#8194;<b>1</b>[<i>w</i>&#8201;=&#8201;<i>x<sub>t</sub></i>]</span>
+        <span class="eq-no">(4.2)</span>
+      </div>
+      <p class="eq-def"><b>1</b>[・] は、括弧の中が成り立てば1、成り立たなければ0をとる。</p>
+      <p>図4-1の文で考える。「X」の次に「は」が来る確率を90％と予想していれば、誤差は 0.90 − 1 = −0.10 と小さい。一方、「経費精算システム」の次にXが来る確率を2％としか見積もっていなければ、誤差は 0.02 − 1 = −0.98 と大きい。上位に予想していた他社製品（50％）には +0.50 の誤差が付き、点数が下げられる。外れが大きい語ほど、大きく修正される。</p>
+      <figure>
+        <div class="fig">
+          <svg class="only-wide" viewBox="0 0 720 300" role="img" aria-label="学習データの文で、文法の語と知識の語の予想と誤差を比べた図">
+            <rect class="s-box-g" x="20" y="14" width="680" height="46" rx="4"/>
+            <text class="s-t" x="360" y="43" text-anchor="middle">経費精算システム「X」は、領収書の読み取りから承認、会計ソフトへの連携までを自動化する。</text>
+            <text class="s-ts" x="20" y="88">位置と次の語</text>
+            <text class="s-ts" x="250" y="88">予想（順伝播）</text>
+            <text class="s-ts" x="520" y="88">実際と誤差（逆伝播）</text>
+            <rect class="s-box" x="20" y="100" width="210" height="76" rx="4"/>
+            <text class="s-tb" x="125" y="132" text-anchor="middle">「X」の次は？</text>
+            <text class="s-ts" x="125" y="154" text-anchor="middle">文法の語</text>
+            <text class="s-t" x="250" y="118">は</text><rect class="s-bar-g" x="320" y="106" width="180" height="14"/><text class="s-ts" x="506" y="118">90%</text>
+            <text class="s-t" x="250" y="142">の</text><rect class="s-bar-g" x="320" y="130" width="12" height="14"/><text class="s-ts" x="338" y="142">6%</text>
+            <text class="s-t" x="250" y="166">を</text><rect class="s-bar-g" x="320" y="154" width="6" height="14"/><text class="s-ts" x="332" y="166">3%</text>
+            <rect class="s-box-g" x="540" y="104" width="56" height="26" rx="4"/><text class="s-tb" x="568" y="122" text-anchor="middle">は</text>
+            <text class="s-tc" x="540" y="150">誤差 0.90 − 1 ＝ −0.10</text>
+            <text class="s-ts" x="540" y="168">外れ小：ほぼ修正なし</text>
+            <rect class="s-box" x="20" y="194" width="210" height="76" rx="4"/>
+            <text class="s-tb" x="125" y="226" text-anchor="middle">「経費精算システム」の次は？</text>
+            <text class="s-ts" x="125" y="248" text-anchor="middle">知識の語</text>
+            <text class="s-t" x="250" y="212">A社製品</text><rect class="s-bar-g" x="320" y="200" width="100" height="14"/><text class="s-ts" x="426" y="212">50%</text>
+            <text class="s-t" x="250" y="236">B社製品</text><rect class="s-bar-g" x="320" y="224" width="50" height="14"/><text class="s-ts" x="376" y="236">25%</text>
+            <text class="s-t" x="250" y="260">X</text><rect class="s-bar-m" x="320" y="248" width="4" height="14"/><text class="s-ts" x="330" y="260">2%</text>
+            <rect class="s-box-m" x="540" y="198" width="56" height="26" rx="4"/><text class="s-tm" x="568" y="216" text-anchor="middle">X</text>
+            <text class="s-tc" x="540" y="244">誤差 0.02 − 1 ＝ −0.98</text>
+            <text class="s-tm" x="540" y="262" style="font-size:12px">外れ大：Xを強く引き上げる</text>
+          </svg>
+<svg class="only-narrow" viewBox="0 0 360 400" role="img" aria-label="文法の語と知識の語の予想と誤差を比べた図">
+<rect class="s-box-g" x="12" y="10" width="336" height="64" rx="4"/>
+<text class="s-t" x="180" y="37" text-anchor="middle">経費精算システム「X」は、領収書の読み取り</text>
+<text class="s-t" x="180" y="59" text-anchor="middle">から承認、会計ソフトへの連携までを自動化する。</text>
+<text class="n-tb" x="12" y="104">「X」の次は？（文法の語）</text>
+<text class="n-t" x="12" y="131">は</text><rect class="s-bar-g" x="48" y="119" width="180" height="14"/><text class="n-ts" x="234" y="131">90%</text>
+<text class="n-t" x="12" y="155">の</text><rect class="s-bar-g" x="48" y="143" width="12" height="14"/><text class="n-ts" x="66" y="155">6%</text>
+<text class="n-t" x="12" y="179">を</text><rect class="s-bar-g" x="48" y="167" width="6" height="14"/><text class="n-ts" x="60" y="179">3%</text>
+<rect class="s-box-g" x="12" y="192" width="44" height="28" rx="4"/><text class="n-tb" x="34" y="211" text-anchor="middle">は</text>
+<text class="n-tc" x="66" y="203">誤差 0.90 − 1 ＝ −0.10</text><text class="n-ts" x="66" y="222">外れ小：ほぼ修正なし</text>
+<text class="n-tb" x="12" y="268">「経費精算システム」の次は？（知識の語）</text>
+<text class="n-t" x="12" y="295">A社製品</text><rect class="s-bar-g" x="84" y="283" width="100" height="14"/><text class="n-ts" x="190" y="295">50%</text>
+<text class="n-t" x="12" y="319">B社製品</text><rect class="s-bar-g" x="84" y="307" width="50" height="14"/><text class="n-ts" x="140" y="319">25%</text>
+<text class="n-t" x="12" y="343">X</text><rect class="s-bar-m" x="84" y="331" width="4" height="14"/><text class="n-ts" x="94" y="343">2%</text>
+<rect class="s-box-m" x="12" y="356" width="44" height="28" rx="4"/><text class="n-tm" x="34" y="375" text-anchor="middle">X</text>
+<text class="n-tc" x="66" y="367">誤差 0.02 − 1 ＝ −0.98</text><text class="n-tm" x="66" y="386">外れ大：Xを強く引き上げる</text>
+</svg>
+        </div>
+        <figcaption><b>図4-1</b>予想と実際の突き合わせ。文法の語と知識の語で、修正の大きさが違う。確率の数値は説明のための例で、構成はトドオナダ社の資料<a class="cite" href="#r16">[16]</a>を参考にした。</figcaption>
+      </figure>
+      <p>助詞や語尾のような文法の語は、どの文でも正解するため強く定着する。社名のような知識の語は、その社名が登場する文の数だけ、少しずつ上がる。</p>
+
+      <h3><span class="sec">4.2</span>逆伝播がベクトルを回す</h3>
+      <p>誤差は出力側から入力側へさかのぼって配分され（誤差逆伝播）、パラメーターは誤差が小さくなる方向へ動く。</p>
+      <div class="eq" role="math" aria-label="パラメーターシータを、学習率イータと損失の勾配の積だけ引いて更新する">
+        <span class="eq-body"><i>θ</i>&#8194;←&#8194;<i>θ</i>&#8194;−&#8194;<i>η</i>&#8201;∇<sub><i>θ</i></sub>ℒ</span>
+        <span class="eq-no">(4.3)</span>
+      </div>
+      <p class="eq-def"><i>θ</i> はモデルのパラメーター、<i>η</i> は学習率で、小さな値に設定される。</p>
+      <p>学習率が小さいため、1回の更新で動く量はごくわずかだ。図4-1の例では、Xのベクトルが文脈の方向へ、文脈のベクトルがXの方向へ少しだけ回り、予想の上位にいた他社はわずかに離される。膨大な文書で同じ方向の更新が繰り返されて、初めて位置が変わる。</p>
+      <p>これはカンドパルらの知見<a class="cite" href="#r13">[13]</a>とも一致する。関連する文書が少ない知識、いわゆるロングテールの知識ほど、モデルは正しく答えられない。ニッチな領域のBtoB企業は、まさにこのロングテールに位置している。だからこそ、関連する文書の数を意図して増やす発信が効く。</p>
+
+      <h3><span class="sec">4.3</span>方向を決める語、移動量をつくる語</h3>
+      <p>一般名詞と社名が同じ文に置かれると、社名のベクトルは一般名詞の方向へ引かれる。ただし一般名詞1語だけでは引く力は1本で、移動量はごくわずかにとどまる。</p>
+      <p>同じ文に、そのカテゴリの意味集合に入っている語を複数置くと、それぞれが社名を引く。文脈はカテゴリの領域全体を向いているため、逆伝播は社名を領域全体へ引き寄せる。<span class="mark">一般名詞との共起が方向を決め、意味集合の語との共起が移動量をつくる。</span>どちらも欠かせない。</p>
+      <figure>
+        <div class="fig">
+          <svg class="only-wide" viewBox="0 0 720 340" role="img" aria-label="一般名詞1語だけと共起した場合と、意味集合の語を同じ文に置いた場合の、ベクトルの動きの違い">
+            <defs>
+              <marker id="f42a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path class="s-ah-a" d="M0 0L10 5L0 10z"/></marker>
+              <marker id="f42g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path class="s-ah" d="M0 0L10 5L0 10z"/></marker>
+            </defs>
+            <text class="s-tb" x="20" y="24">一般名詞1語だけと共起</text>
+            <ellipse class="s-zone s-dash" cx="200" cy="124" rx="122" ry="58"/>
+            <text class="s-ts" x="200" y="54" text-anchor="middle">経費精算システムの意味集合</text>
+            <circle class="s-dot-g" cx="110" cy="100" r="3.5"/><text class="s-tc" x="116" y="104">電子帳簿保存法</text>
+            <circle class="s-dot-g" cx="250" cy="96" r="3.5"/><text class="s-tc" x="256" y="100">インボイス</text>
+            <circle class="s-dot-g" cx="120" cy="152" r="3.5"/><text class="s-tc" x="126" y="156">承認フロー</text>
+            <circle class="s-dot-g" cx="230" cy="154" r="3.5"/><text class="s-tc" x="236" y="158">会計ソフト連携</text>
+            <circle class="s-dot" cx="200" cy="126" r="4.5"/><text class="s-ta" x="200" y="132" text-anchor="middle" dy="-12">経費精算システム</text>
+            <line class="s-ln-a s-dash" stroke-width="1" x1="296" y1="268" x2="203" y2="130"/>
+            <line class="s-ln" stroke-width="2" x1="40" y1="300" x2="300" y2="270" marker-end="url(#f42g)"/>
+            <line class="s-ln-a s-dash" stroke-width="2" x1="40" y1="300" x2="296" y2="256" marker-end="url(#f42a)"/>
+            <text class="s-tc" x="300" y="292" text-anchor="end">X（いま）</text>
+            <text class="s-ta" x="222" y="250" text-anchor="end">X（次）</text>
+            <text class="s-ts" x="20" y="330">方向は決まるが、1回の移動量はごくわずか</text>
+            <line class="s-ln" x1="360" y1="10" x2="360" y2="330" stroke-dasharray="2 4"/>
+            <text class="s-tb" x="380" y="24">意味集合の語も同じ文に置く</text>
+            <ellipse class="s-zone s-dash" cx="550" cy="124" rx="122" ry="58"/>
+            <text class="s-ts" x="550" y="54" text-anchor="middle">経費精算システムの意味集合</text>
+            <circle class="s-dot" cx="460" cy="100" r="3.5"/><text class="s-tc" x="466" y="104">電子帳簿保存法</text>
+            <circle class="s-dot" cx="600" cy="96" r="3.5"/><text class="s-tc" x="606" y="100">インボイス</text>
+            <circle class="s-dot" cx="470" cy="152" r="3.5"/><text class="s-tc" x="476" y="156">承認フロー</text>
+            <circle class="s-dot" cx="580" cy="154" r="3.5"/><text class="s-tc" x="586" y="158">会計ソフト連携</text>
+            <circle class="s-dot" cx="550" cy="126" r="4.5"/><text class="s-ta" x="550" y="132" text-anchor="middle" dy="-12">経費精算システム</text>
+            <g class="s-ln-a s-dash" stroke-width="1">
+              <line x1="660" y1="268" x2="463" y2="104"/><line x1="660" y1="268" x2="603" y2="100"/>
+              <line x1="660" y1="268" x2="473" y2="156"/><line x1="660" y1="268" x2="583" y2="158"/>
+              <line x1="660" y1="268" x2="553" y2="130"/>
+            </g>
+            <line class="s-ln" stroke-width="2" x1="390" y1="300" x2="660" y2="270" marker-end="url(#f42g)"/>
+            <line class="s-ln-a" stroke-width="2.4" x1="390" y1="300" x2="556" y2="196" marker-end="url(#f42a)"/>
+            <text class="s-tc" x="700" y="292" text-anchor="end">X（いま）</text>
+            <text class="s-ta" x="520" y="214" text-anchor="end">X（次）</text>
+            <text class="s-ts" x="380" y="330">引く力が増え、目に見える移動量になる</text>
+          </svg>
+<svg class="only-narrow" viewBox="0 0 360 690" role="img" aria-label="一般名詞1語だけの場合と、意味集合の語も同じ文に置いた場合のベクトルの動き">
+            <defs>
+              <marker id="n42a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path class="s-ah-a" d="M0 0L10 5L0 10z"/></marker>
+              <marker id="n42g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path class="s-ah" d="M0 0L10 5L0 10z"/></marker>
+            </defs>
+            <text class="s-tb" x="20" y="24">一般名詞1語だけと共起</text>
+            <ellipse class="s-zone s-dash" cx="200" cy="124" rx="122" ry="58"/>
+            <text class="s-ts" x="200" y="54" text-anchor="middle">経費精算システムの意味集合</text>
+            <circle class="s-dot-g" cx="110" cy="100" r="3.5"/><text class="s-tc" x="116" y="104">電子帳簿保存法</text>
+            <circle class="s-dot-g" cx="250" cy="96" r="3.5"/><text class="s-tc" x="256" y="100">インボイス</text>
+            <circle class="s-dot-g" cx="120" cy="152" r="3.5"/><text class="s-tc" x="126" y="156">承認フロー</text>
+            <circle class="s-dot-g" cx="230" cy="154" r="3.5"/><text class="s-tc" x="236" y="158">会計ソフト連携</text>
+            <circle class="s-dot" cx="200" cy="126" r="4.5"/><text class="s-ta" x="200" y="132" text-anchor="middle" dy="-12">経費精算システム</text>
+            <line class="s-ln-a s-dash" stroke-width="1" x1="296" y1="268" x2="203" y2="130"/>
+            <line class="s-ln" stroke-width="2" x1="40" y1="300" x2="300" y2="270" marker-end="url(#n42g)"/>
+            <line class="s-ln-a s-dash" stroke-width="2" x1="40" y1="300" x2="296" y2="256" marker-end="url(#n42a)"/>
+            <text class="s-tc" x="300" y="292" text-anchor="end">X（いま）</text>
+            <text class="s-ta" x="222" y="250" text-anchor="end">X（次）</text>
+            <text class="s-ts" x="20" y="330">方向は決まるが、1回の移動量はごくわずか</text>
+            <line class="s-ln" x1="12" y1="345" x2="348" y2="345" stroke-dasharray="2 4"/><g transform="translate(-350,350)">
+            <text class="s-tb" x="380" y="24">意味集合の語も同じ文に置く</text>
+            <ellipse class="s-zone s-dash" cx="550" cy="124" rx="122" ry="58"/>
+            <text class="s-ts" x="550" y="54" text-anchor="middle">経費精算システムの意味集合</text>
+            <circle class="s-dot" cx="460" cy="100" r="3.5"/><text class="s-tc" x="466" y="104">電子帳簿保存法</text>
+            <circle class="s-dot" cx="600" cy="96" r="3.5"/><text class="s-tc" x="606" y="100">インボイス</text>
+            <circle class="s-dot" cx="470" cy="152" r="3.5"/><text class="s-tc" x="476" y="156">承認フロー</text>
+            <circle class="s-dot" cx="580" cy="154" r="3.5"/><text class="s-tc" x="586" y="158">会計ソフト連携</text>
+            <circle class="s-dot" cx="550" cy="126" r="4.5"/><text class="s-ta" x="550" y="132" text-anchor="middle" dy="-12">経費精算システム</text>
+            <g class="s-ln-a s-dash" stroke-width="1">
+              <line x1="660" y1="268" x2="463" y2="104"/><line x1="660" y1="268" x2="603" y2="100"/>
+              <line x1="660" y1="268" x2="473" y2="156"/><line x1="660" y1="268" x2="583" y2="158"/>
+              <line x1="660" y1="268" x2="553" y2="130"/>
+            </g>
+            <line class="s-ln" stroke-width="2" x1="390" y1="300" x2="660" y2="270" marker-end="url(#n42g)"/>
+            <line class="s-ln-a" stroke-width="2.4" x1="390" y1="300" x2="556" y2="196" marker-end="url(#n42a)"/>
+            <text class="s-tc" x="700" y="292" text-anchor="end">X（いま）</text>
+            <text class="s-ta" x="520" y="214" text-anchor="end">X（次）</text>
+            <text class="s-ts" x="380" y="330">引く力が増え、目に見える移動量になる</text>
+          </g></svg>
+        </div>
+        <figcaption><b>図4-2</b>点線は、同じ文に置いた語が社名Xを引く力を表す。2次元に描いた模式図。</figcaption>
+      </figure>
+
+      <h3><span class="sec">4.4</span>共起は語順どおりに学習される</h3>
+      <p>次語予測は、左から右にしか学習されない。この性質を示したのが「逆転の呪い（Reversal Curse）」の研究である<a class="cite" href="#r14">[14]</a>。「AはBである」という文で学習したモデルは、「Bは何か」と逆向きに問われると答えられない。実在の著名人についても、GPT-4は「トム・クルーズの母は誰か」に79％正答した一方、逆向きの質問への正答は33％にとどまった。</p>
+      <p>社名に置き換えると、「経費精算システム『X』」と「『X』は経費精算システムである」は別々に学習される。両方の語順の文があって初めて、一般名詞から社名へ、社名から一般名詞への双方向の結びつきができる。</p>
+      <p>また、単語を並べただけの文は学習の単位になりにくい。助詞や語尾のつながりが学習されず、社名が文の中に入る形が残らない。学習前の品質フィルタでも落ちやすい<a class="cite" href="#r6">[6]</a>。助詞でつないだ、完結した文で書く必要がある。</p>
+
+      <h3><span class="sec">4.5</span>学習データのつくられ方：重み付けと重複除去</h3>
+      <p>学習データは、ウェブの文章をそのまま使うわけではない。GPT-3の論文には、質の高い情報源を繰り返し学習させる重み付けが示されている。Wikipedia（約30億トークン）は学習中に3.4回読まれた一方、Common Crawl（約4,100億トークン）は0.44回にとどまる<a class="cite" href="#r6">[6]</a>。</p>
+      <p>さらに、似た文書は重複除去で取り除かれる。GPT-3はMinHashによるあいまい重複除去でデータを平均10％削減し<a class="cite" href="#r6">[6]</a>、公開データセットThe PileではCommon Crawlの26％が重複と判定された<a class="cite" href="#r15">[15]</a>。<span class="mark">配信サービスを通じて同じ文面のリリースが多数のサイトに転載されても、学習前に一本へまとめられる可能性が高い。</span>複数のドメインに載ることの効果を生むのは、別々に書かれた文章、すなわち取材記事、寄稿、共催イベントのレポート、調査データを引用した第三者の記事である。</p>
+      <p>新しいモデルが出るたびに、新しい期間のデータが加わる。トドオナダ社の調べでは、カットオフが約3か月違うモデルの間で、想起される企業の約7割が入れ替わっていた<a class="cite" href="#r16">[16]</a>。同社は、想起集合がすでに形成されたカテゴリで上位を覆すには、次のモデル世代まで（同社の見立てで約2年）上回る共起量を積む必要があるとも説明している。裏を返せば、想起集合が未形成のカテゴリでは、先に発信した企業が第一想起を取れる。BtoBのニッチな領域には、その余地が大きい。</p>
+      <aside class="points"><p class="h">この章の要点</p><p>学習は、外れた分だけ少しずつ進む。一般名詞が方向を決め、意味集合の語が移動量をつくる。両方の語順で、別々に書かれた文章を、続けて積む。</p></aside>
+    </section>
+
+    <section class="chapter" id="ch5">
+      <p class="ch-no">第5章</p>
+      <h2>意味集合の積み込み方</h2>
+      <p class="lead">発信のたびに、二つの共起を必ず入れる。一般名詞と自社名の双方向の共起で方向を決め、意味集合の語との共起で移動量をつくる。</p>
+
+      <h3><span class="sec">5.1</span>プレスリリースで必ず行う二つの共起</h3>
+      <figure>
+        <div class="cols">
+          <div class="card m">
+            <h4>① 一般名詞と自社名を、双方向に</h4>
+            <p class="k">方向を決める。「〇〇といえば？」で自社名を直接押し上げる</p>
+            <div class="ex"><small>一般名詞が先</small>経費精算システム「X」を提供する株式会社〇〇は…</div>
+            <div class="ex"><small>自社名が先</small>「X」は、経費精算システムである。</div>
+          </div>
+          <div class="card a">
+            <h4>② 意味集合の語と自社名を、同じ文に</h4>
+            <p class="k">移動量をつくる。条件の多い質問の文脈と、自社の意味集合を重ねる</p>
+            <div class="ex"><small>上位社の意味集合のうち、自社に足りない語を足す</small>「X」は、電子帳簿保存法とインボイス制度に対応し、承認フローから会計ソフト連携までを自動化する経費精算システムである。</div>
+          </div>
+        </div>
+        <div class="strip">
+          <div><b>①だけ</b>キャンベラ型。直接聞かれれば挙がるが、条件の多い質問で負ける</div>
+          <div><b>②だけ</b>シドニー型。文脈には近いが、カテゴリ名と結びつかない</div>
+          <div class="on"><b>①と②の両方</b>パリ型。どちらの聞かれ方でも挙がる</div>
+        </div>
+        <figcaption><b>図5-1</b>プレスリリースで必ず行う二つの共起。共通の条件として、自社名の表記を統一し、助詞でつないだ完結した文で書き、見出しとリード第1文を最優先にする。</figcaption>
+      </figure>
+
+      <h3><span class="sec">5.2</span>書き方の4手順</h3>
+      <ol class="steps">
+        <li><div><strong>想起質問を選ぶ</strong><p>利用者がAIに打つ質問を選ぶ。「〇〇といえば？」「おすすめの〇〇は？」の〇〇に入る一般名詞が対象になる。社内用語や自社の造語は、AIがまだ意味を学習していないため使わない。</p></div></li>
+        <li><div><strong>想起集合を確かめる</strong><p>その質問で、いまどの社名が挙がるかを確かめる。想起集合が未形成なら、先行して第一想起を取りにいける。形成済みなら、上位社を上回る共起量が必要になる。</p></div></li>
+        <li><div><strong>意味集合を特定する</strong><p>上位社と結びついている属性の語を調べ、自社の意味集合に足りない語を特定する。</p></div></li>
+        <li><div><strong>執筆する</strong><p>手順1と3の語を、自社名と同じ文に置く。見出しとリードの第1文を最優先にし、自社名と固有の属性（製品・所属・役割）も同じ文に入れる。</p></div></li>
+      </ol>
+      <p>手順2と3の計測には、トドオナダ社の計測ツール「ディギディギ」のように、想起質問ごとの想起と、上位社・自社の意味集合を比べられる仕組みを使う<a class="cite" href="#r16">[16]</a>。生成AIに「この言葉から連想する語を挙げて」と尋ねる簡易な方法でも、出発点にはなる。共起させる語は、いまのモデルがすでに意味を持っている語から選ぶ。</p>
+
+      <h3><span class="sec">5.3</span>執筆のルール</h3>
+      <div class="tbl">
+        <table>
+          <thead><tr><th>ルール</th><th>理由</th></tr></thead>
+          <tbody>
+            <tr><td data-label="ルール">自社名、一般名詞、意味集合の語を同じ文に置く</td><td data-label="理由">同じ文書・同じ文での共起が、学習の単位になる<a class="cite" href="#r13">[13]</a></td></tr>
+            <tr><td data-label="ルール">両方の語順で書く</td><td data-label="理由">「AはB」から「BはA」は自動では学習されない<a class="cite" href="#r14">[14]</a></td></tr>
+            <tr><td data-label="ルール">自社名・製品名の表記を統一する</td><td data-label="理由">表記ゆれは別のトークン列になり、学習の統計が分散する</td></tr>
+            <tr><td data-label="ルール">自社名と固有の属性を同じ文に置く</td><td data-label="理由">製品、所属、役割が、そのまま自社の意味集合の中身になる</td></tr>
+            <tr><td data-label="ルール">報道文体で、事実を、完結した文で書く</td><td data-label="理由">広告文句やCTA、記号の装飾は品質フィルタで落ちやすく、単語の羅列は学習されにくい</td></tr>
+            <tr><td data-label="ルール">「同社」「弊社」を多用せず、社名を出し直す</td><td data-label="理由">社名と属性の共起が増える（推奨。効果の実測は未確認）</td></tr>
+            <tr><td data-label="ルール">事実にない属性の語は足さない</td><td data-label="理由">実際の製品特性に即した結びつきだけをつくる。誤った結びつきは、誤った推薦につながる</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3><span class="sec">5.4</span>書き換え例：リリースの冒頭2文</h3>
+      <figure>
+        <div class="cols">
+          <div class="card">
+            <h4>Before</h4>
+            <p>株式会社〇〇は、この度、新サービスをリリースいたしました。同社は、お客様の声にお応えし、さらなる進化を遂げました。</p>
+            <p class="k" style="margin:10px 0 0">一般名詞なし。属性の語なし。主語が「同社」</p>
+          </div>
+          <div class="card a">
+            <h4>After</h4>
+            <p>株式会社〇〇は、電子帳簿保存法とインボイス制度に対応した経費精算システム「X」の新機能を提供開始した。「X」は、領収書の読み取りから承認フロー、会計ソフト連携までを自動化する経費精算システムである。</p>
+            <p class="k" style="margin:10px 0 0">一般名詞、意味集合の語、固有の属性、社名の再出、両方の語順</p>
+          </div>
+        </div>
+        <figcaption><b>図5-2</b>書き換え例。構成はトドオナダ社の資料<a class="cite" href="#r16">[16]</a>を参考に、BtoBの例へ置き換えた。</figcaption>
+      </figure>
+      <p>Afterの1文目は「経費精算システム『X』」、2文目は「『X』は…経費精算システムである」という逆の語順になっている。意味集合の語として、電子帳簿保存法、インボイス制度、承認フロー、会計ソフト連携を同じ文に置いた。いずれも製品の実際の機能であることが前提である。</p>
+      <aside class="points"><p class="h">この章の要点</p><p>一般名詞と自社名の双方向の共起で方向を決め、意味集合の語との共起で移動量をつくる。助詞でつないだ完結した文で、両方の語順で、出し続ける。</p></aside>
+    </section>
+
+    <section class="chapter" id="ch6">
+      <p class="ch-no">第6章</p>
+      <h2>IDEATECHの進め方：意味集合 × ルールメイク × 調査PR</h2>
+      <p class="lead">意味集合対策で候補に入り、ルールメイクで選ばれる理由をつくる。その両方を、調査PRで継続的に積み上げる。</p>
+
+      <h3><span class="sec">6.1</span>候補に入る、そして選ばれる</h3>
+      <p>意味集合対策は、想起集合に入るための打ち手である。一方、候補の中からどれが選ばれるかは「選び方の基準」で決まる。この基準を、自社が有利になる形でファクトとともに市場へ定着させる手法を、IDEATECHは「ルールメイク」と呼んできた。洗剤の購買基準を「白さ」から「除菌力」へ書き換えた戦略PRと同じ発想である。</p>
+      <p>ルールメイクの中心は「基準X」の設定にある。基準Xには三つの条件を置く。自社が構造的に勝てる軸であること。調査で証明できること。そして、カテゴリの意味集合にすでに入っている言葉であること。三つ目の条件を満たせば、基準Xで語ること自体が、候補に入るための発信にもなる。</p>
+      <figure>
+        <div class="fig">
+          <svg class="only-wide" viewBox="0 0 720 270" role="img" aria-label="推薦の二段階。第1段階で候補に入り、第2段階で基準Xによって選ばれる。基準Xの三つ目の条件が第1段階にも効く">
+            <defs>
+              <marker id="f61" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto"><path class="s-ah" d="M0 0L10 5L0 10z"/></marker>
+              <marker id="f61a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto"><path class="s-ah-a" d="M0 0L10 5L0 10z"/></marker>
+            </defs>
+            <rect class="s-box-a" x="20" y="30" width="300" height="84" rx="6"/>
+            <text class="s-tb" x="170" y="64" text-anchor="middle" style="font-size:15px">第1段階　候補に入る</text>
+            <text class="s-tc" x="170" y="90" text-anchor="middle">意味集合対策：想起集合に入る</text>
+            <line class="s-ln" stroke-width="1.6" x1="322" y1="72" x2="396" y2="72" marker-end="url(#f61)"/>
+            <rect class="s-box-m" x="400" y="30" width="300" height="84" rx="6"/>
+            <text class="s-tb" x="550" y="64" text-anchor="middle" style="font-size:15px">第2段階　選ばれる</text>
+            <text class="s-tc" x="550" y="90" text-anchor="middle">ルールメイク：基準Xを市場に定着させる</text>
+            <text class="s-ts" x="420" y="142">基準Xの三つの条件</text>
+            <rect class="s-box" x="420" y="152" width="280" height="28" rx="4"/><text class="s-t" x="434" y="171">① 自社が構造的に勝てる軸</text>
+            <rect class="s-box" x="420" y="188" width="280" height="28" rx="4"/><text class="s-t" x="434" y="207">② 調査で証明できる</text>
+            <rect class="s-box-a" x="420" y="224" width="280" height="28" rx="4" stroke-width="2"/><text class="s-ta" x="434" y="243" style="font-size:14px">③ カテゴリの意味集合にある言葉</text>
+            <path class="s-ln-a s-dash" stroke-width="1.6" d="M418 238 H170 V118" marker-end="url(#f61a)"/>
+            <text class="s-ta" x="184" y="228">③は候補入りにも効く</text>
+          </svg>
+<svg class="only-narrow" viewBox="0 0 360 380" role="img" aria-label="推薦の二段階と基準Xの条件"><defs><marker id="n61" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path class="s-ah" d="M0 0L10 5L0 10z"/></marker><marker id="n61a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path class="s-ah-a" d="M0 0L10 5L0 10z"/></marker></defs>
+<rect class="s-box-a" x="12" y="10" width="336" height="70" rx="6"/>
+<text class="n-tb" x="180" y="40" text-anchor="middle">第1段階　候補に入る</text>
+<text class="n-tc" x="180" y="64" text-anchor="middle">意味集合対策：想起集合に入る</text>
+<line class="s-ln" stroke-width="1.6" x1="180" y1="82" x2="180" y2="112" marker-end="url(#n61)"/>
+<rect class="s-box-m" x="12" y="116" width="336" height="70" rx="6"/>
+<text class="n-tb" x="180" y="146" text-anchor="middle">第2段階　選ばれる</text>
+<text class="n-tc" x="180" y="170" text-anchor="middle">ルールメイク：基準Xを定着させる</text>
+<text class="n-ts" x="60" y="214">基準Xの三つの条件</text>
+<rect class="s-box" x="60" y="224" width="288" height="30" rx="4"/><text class="n-t" x="72" y="244">① 自社が構造的に勝てる軸</text>
+<rect class="s-box" x="60" y="262" width="288" height="30" rx="4"/><text class="n-t" x="72" y="282">② 調査で証明できる</text>
+<rect class="s-box-a" x="60" y="300" width="288" height="30" rx="4" stroke-width="2"/><text class="n-ta" x="72" y="320">③ カテゴリの意味集合にある言葉</text>
+<path class="s-ln-a s-dash" stroke-width="1.6" d="M58 315 H30 V45 H16" marker-end="url(#n61a)"/>
+<text class="n-ta" x="60" y="358">③は候補入りにも効く（点線）</text>
+</svg>
+        </div>
+        <figcaption><b>図6-1</b>推薦の二段階と、基準Xの条件。三つ目の条件が、二つの対策をつなぐ。</figcaption>
+      </figure>
+      <p>順番は、候補入りが先である。「大企業ならA、中堅企業ならB」といった条件分岐は、ユーザーがその条件を入力して初めて効く。候補に入っていなければ、条件で選ばれる場面そのものが回ってこない。加えて、その基準で質問するニーズが利用者の側に育っていなければ、基準は入力されない。ルールメイクの発信は、AIに向けた発信であると同時に、人に向けた基準づくりでもある。</p>
+
+      <h3><span class="sec">6.2</span>なぜ調査PRなのか</h3>
+      <p>ここまでの条件を一つの形式で満たすのが、調査PR（IDEATECHのリサピー®）である。</p>
+      <div class="tbl">
+        <table>
+          <thead><tr><th>求められる条件</th><th>調査PRが満たす理由</th></tr></thead>
+          <tbody>
+            <tr><td data-label="求められる条件">第三者目線の文章</td><td data-label="調査PRが満たす理由">調査結果は回答者の声として書け、自社の主張になりにくい</td></tr>
+            <tr><td data-label="求められる条件">別々に書かれた複数の文章</td><td data-label="調査PRが満たす理由">調査データはメディアや第三者の記事に引用され、文面の異なる文章が増える。重複除去の影響を受けにくい</td></tr>
+            <tr><td data-label="求められる条件">継続</td><td data-label="調査PRが満たす理由">調査テーマは月単位で設計でき、発信を止めない仕組みを契約の形で持てる</td></tr>
+            <tr><td data-label="求められる条件">基準の言語化</td><td data-label="調査PRが満たす理由">基準の発見、正当化、充足のギャップという3段階を、そのまま設問に落とせる</td></tr>
+            <tr><td data-label="求められる条件">引用されやすさ</td><td data-label="調査PRが満たす理由">統計と出典を伴う文章は、生成AIの回答に使われやすいことがGEO論文でも示されている<a class="cite" href="#r11">[11]</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3><span class="sec">6.3</span>進め方とKPI</h3>
+      <p>IDEATECHは、IDEA LLMO Boardの三つの機能（Monitoring、Strategy、Action List）に沿って、次のサイクルで進める。</p>
+      <figure>
+        <div class="fig">
+          <svg class="only-wide" viewBox="0 0 720 220" role="img" aria-label="診断、設計、実行、計測の4段階を、モデル更新ごとに繰り返すサイクル">
+            <defs><marker id="f62" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path class="s-ah" d="M0 0L10 5L0 10z"/></marker></defs>
+            <rect class="s-box" x="20" y="30" width="156" height="104" rx="6"/>
+            <text class="s-tb" x="36" y="58">1　診断</text><text class="s-ta" x="36" y="78" style="font-size:12px">Monitoring</text>
+            <text class="s-tc" x="36" y="102">想起質問・想起集合</text><text class="s-tc" x="36" y="120">意味集合を計測する</text>
+            <line class="s-ln" x1="178" y1="82" x2="194" y2="82" marker-end="url(#f62)"/>
+            <rect class="s-box" x="196" y="30" width="156" height="104" rx="6"/>
+            <text class="s-tb" x="212" y="58">2　設計</text><text class="s-ta" x="212" y="78" style="font-size:12px">Strategy</text>
+            <text class="s-tc" x="212" y="102">基準Xと調査を設計</text><text class="s-tc" x="212" y="120">発信先と頻度を決める</text>
+            <line class="s-ln" x1="354" y1="82" x2="370" y2="82" marker-end="url(#f62)"/>
+            <rect class="s-box-a" x="372" y="30" width="156" height="104" rx="6"/>
+            <text class="s-tb" x="388" y="58">3　実行</text><text class="s-ta" x="388" y="78" style="font-size:12px">Action List</text>
+            <text class="s-tc" x="388" y="102">調査リリース・寄稿</text><text class="s-tc" x="388" y="120">共催とレポート発信</text>
+            <line class="s-ln" x1="530" y1="82" x2="546" y2="82" marker-end="url(#f62)"/>
+            <rect class="s-box" x="548" y="30" width="156" height="104" rx="6"/>
+            <text class="s-tb" x="564" y="58">4　計測</text><text class="s-ta" x="564" y="78" style="font-size:12px">Monitoring</text>
+            <text class="s-tc" x="564" y="102">引用・想起・意味集合</text><text class="s-tc" x="564" y="120">競合の発信量を追う</text>
+            <path class="s-ln" stroke-width="1.2" d="M626 136 V172 H98 V140" marker-end="url(#f62)"/>
+            <text class="s-ts" x="362" y="196" text-anchor="middle">新しいモデルが出るたびに、効果を判定して設計を見直す</text>
+          </svg>
+<svg class="only-narrow" viewBox="0 0 360 320" role="img" aria-label="診断、設計、実行、計測を繰り返すサイクル"><defs><marker id="n62" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" markerUnits="userSpaceOnUse" orient="auto"><path class="s-ah" d="M0 0L10 5L0 10z"/></marker></defs><rect class="s-box" x="12" y="12" width="160" height="104" rx="6"/><text class="n-tb" x="26" y="40">1　診断</text><text class="n-ta" x="26" y="60" style="font-size:13px">Monitoring</text><text class="n-tc" x="26" y="84">想起質問・想起集合</text><text class="n-tc" x="26" y="104">意味集合を計測</text><rect class="s-box" x="188" y="12" width="160" height="104" rx="6"/><text class="n-tb" x="202" y="40">2　設計</text><text class="n-ta" x="202" y="60" style="font-size:13px">Strategy</text><text class="n-tc" x="202" y="84">基準Xと調査を設計</text><text class="n-tc" x="202" y="104">発信先と頻度</text><rect class="s-box-a" x="188" y="148" width="160" height="104" rx="6"/><text class="n-tb" x="202" y="176">3　実行</text><text class="n-ta" x="202" y="196" style="font-size:13px">Action List</text><text class="n-tc" x="202" y="220">調査リリース・寄稿</text><text class="n-tc" x="202" y="240">共催とレポート</text><rect class="s-box" x="12" y="148" width="160" height="104" rx="6"/><text class="n-tb" x="26" y="176">4　計測</text><text class="n-ta" x="26" y="196" style="font-size:13px">Monitoring</text><text class="n-tc" x="26" y="220">引用・想起を追う</text><text class="n-tc" x="26" y="240">競合の発信量も</text><line class="s-ln" x1="173" y1="64" x2="186" y2="64" marker-end="url(#n62)"/><line class="s-ln" x1="268" y1="117" x2="268" y2="146" marker-end="url(#n62)"/><line class="s-ln" x1="187" y1="200" x2="174" y2="200" marker-end="url(#n62)"/><line class="s-ln" x1="92" y1="147" x2="92" y2="118" marker-end="url(#n62)"/><text class="n-ts" x="180" y="284" text-anchor="middle">新しいモデルが出るたびに、</text><text class="n-ts" x="180" y="304" text-anchor="middle">効果を判定して設計を見直す</text></svg>
+        </div>
+        <figcaption><b>図6-2</b>IDEATECHの進め方。結果はIDEA LLMO Intelligence Reportとしてお渡しする。</figcaption>
+      </figure>
+      <p>診断では、IDEAインサイト®でペルソナと、その人がAIに入力する一般名詞を特定し、想起集合と意味集合を計測する。設計では、基準X、調査テーマ、発信先と頻度を決める。実行では、調査リリース、寄稿、共催イベントとそのレポートを継続する。計測では、AI検索での引用・掲載、想起集合への出現、意味集合のカバー、競合の発信量を追い、新しいモデルが出るたびに、施策期間がカットオフに含まれていたかを確かめる。</p>
+      <p>最終的に見る指標は、AI経由の問い合わせ件数、問い合わせ企業の質、受注である。AI経由の流入数そのものには多くを期待できないが、AIで候補を絞ってから問い合わせてくる企業は案件化率が高い。言及率や意味集合のカバーは、そこに至る先行指標として置く。</p>
+      <aside class="points"><p class="h">この章の要点</p><p>意味集合対策で候補に入り、ルールメイクで選ばれる。基準Xは意味集合にある言葉で立てる。調査PRは、その両方を継続して積み上げる形式である。</p></aside>
+    </section>
+
+    <section class="chapter" id="ch7">
+      <p class="ch-no">第7章</p>
+      <h2>よくある誤解</h2>
+      <p class="lead">LLMO対策の現場でよく聞く説明を、本書の仕組みに照らして確かめる。</p>
+      <dl class="qa">
+        <dt>「書き方を整えれば、AIに選ばれる」</dt>
+        <dd>書き方の工夫が効くのは、ふるいを通った後である（第3章）。Google自身も、AI機能に表示されるための特別な最適化はないとしている<a class="cite" href="#r12">[12]</a>。</dd>
+        <dt>「一度上位に出れば、それで終わり」</dt>
+        <dd>学習は継続戦である。発信を止めれば、次のモデルで上書きされる（4.5節）。</dd>
+        <dt>「同じリリースを多くのサイトに載せれば、量になる」</dt>
+        <dd>同一の文面は重複除去でまとめられやすい。量になるのは、別々に書かれた文章である（4.5節）。</dd>
+        <dt>「権威ある監修者を立てれば、評価される」</dt>
+        <dd>AIの本体には、権威性という概念がほとんどない。効くのは、その人自身が強い意味集合を持ち、その連想を借りられる場合である。肩書や写真だけでは、連想は動かない。</dd>
+        <dt>「新しい言葉をつくれば、カテゴリを取れる」</dt>
+        <dd>AIは新しい言葉を覚えるが、利用者はその言葉で質問しない。既存の一般名詞と必ずセットで出す。プレミアムビールが「ビールの一種」として理解されたのと同じである。</dd>
+        <dt>「意味集合に寄せるほど、よい」</dt>
+        <dd>コンセプトが先、意味集合は後である。読み手に伝わらない文章は、人にもAIにも引用されない。事実にない属性の語は足さない。</dd>
+        <dt>「ツール事業者の数字は、そのまま使える」</dt>
+        <dd>本書に載せた数値も含め、独自調査の数字は条件によって変わる。自社で測って確かめるか、出典と条件を添えて使う。あらゆるLLMO対策論は、その事業者のルールメイクでもある。</dd>
+      </dl>
+    </section>
+
+    <section class="chapter" id="outro">
+      <h2>おわりに</h2>
+      <p>AIに選ばれる会社とは、カテゴリ名の連想の中に、自分の名前を量と継続で書き込んだ会社である。</p>
+      <p>この結論は、PRに携わる者にとって追い風でもある。複数の媒体に同じ文脈を載せ、第三者に語ってもらい、社会の関心と結びつけて企画を立てるのは、もともとPRの仕事だからだ。違うのは、「この文章は学習に乗るか」「この語順で書けているか」という、これまで意識してこなかった判断が加わることにある。</p>
+      <p>IDEATECHは、ご支援先の皆さまとこの判断を一つずつ積み重ねていく。本書は、そのための共通言語として更新を続ける。</p>
+    </section>
+
+    <section class="chapter" id="refs">
+      <h2>参考文献</h2>
+      <ol class="refs">
+        <li id="r1">Harris, Z. S. (1954). Distributional Structure. <i>Word</i>, 10(2–3), 146–162.</li>
+        <li id="r2">Firth, J. R. (1957). A synopsis of linguistic theory, 1930–1955. In <i>Studies in Linguistic Analysis</i>. Oxford: Blackwell.</li>
+        <li id="r3">Mikolov, T., Chen, K., Corrado, G., &amp; Dean, J. (2013). Efficient Estimation of Word Representations in Vector Space. <a href="https://arxiv.org/abs/1301.3781">arXiv:1301.3781</a></li>
+        <li id="r4">Vaswani, A. et al. (2017). Attention Is All You Need. <i>NeurIPS 2017</i>. <a href="https://arxiv.org/abs/1706.03762">arXiv:1706.03762</a></li>
+        <li id="r5">Devlin, J. et al. (2019). BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding. <i>NAACL 2019</i>. <a href="https://arxiv.org/abs/1810.04805">arXiv:1810.04805</a></li>
+        <li id="r6">Brown, T. et al. (2020). Language Models are Few-Shot Learners. <i>NeurIPS 2020</i>. <a href="https://arxiv.org/abs/2005.14165">arXiv:2005.14165</a></li>
+        <li id="r7">Geva, M. et al. (2021). Transformer Feed-Forward Layers Are Key-Value Memories. <i>EMNLP 2021</i>. <a href="https://arxiv.org/abs/2012.14913">arXiv:2012.14913</a></li>
+        <li id="r8">Meng, K., Bau, D., Andonian, A., &amp; Belinkov, Y. (2022). Locating and Editing Factual Associations in GPT. <i>NeurIPS 2022</i>. <a href="https://arxiv.org/abs/2202.05262">arXiv:2202.05262</a></li>
+        <li id="r9">Nogueira, R., &amp; Cho, K. (2019). Passage Re-ranking with BERT. <a href="https://arxiv.org/abs/1901.04085">arXiv:1901.04085</a></li>
+        <li id="r10">Lewis, P. et al. (2020). Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks. <i>NeurIPS 2020</i>. <a href="https://arxiv.org/abs/2005.11401">arXiv:2005.11401</a></li>
+        <li id="r11">Aggarwal, P. et al. (2024). GEO: Generative Engine Optimization. <i>KDD 2024</i>. <a href="https://arxiv.org/abs/2311.09735">arXiv:2311.09735</a></li>
+        <li id="r12">Google Search Central. AI features and your website（2025年12月10日更新）. <a href="https://developers.google.com/search/docs/appearance/ai-features">developers.google.com</a></li>
+        <li id="r13">Kandpal, N. et al. (2023). Large Language Models Struggle to Learn Long-Tail Knowledge. <i>ICML 2023</i>. <a href="https://arxiv.org/abs/2211.08411">arXiv:2211.08411</a></li>
+        <li id="r14">Berglund, L. et al. (2024). The Reversal Curse: LLMs trained on “A is B” fail to learn “B is A”. <i>ICLR 2024</i>. <a href="https://arxiv.org/abs/2309.12288">arXiv:2309.12288</a></li>
+        <li id="r15">Gao, L. et al. (2020). The Pile: An 800GB Dataset of Diverse Text for Language Modeling. <a href="https://arxiv.org/abs/2101.00027">arXiv:2101.00027</a></li>
+        <li id="r16">株式会社トドオナダ（2026）. AI第一想起を目指す LLM時代の意味集合対策（ダイジェスト資料）.</li>
+      </ol>
+    </section>
+
+    <section class="chapter" id="terms">
+      <h2>用語集</h2>
+      <div class="tbl">
+        <table>
+          <thead><tr><th>用語</th><th>意味</th></tr></thead>
+          <tbody>
+            <tr><td data-label="用語">意味集合</td><td data-label="意味">ある語に結びついた連想のまとまり。AIは、質問と社名・文書の意味集合の重なりで答えを選ぶ</td></tr>
+            <tr><td data-label="用語">想起集合</td><td data-label="意味">カテゴリ名を問われたときに回答に並ぶ候補のまとまり。LLMO対策の第一の目標</td></tr>
+            <tr><td data-label="用語">第一想起</td><td data-label="意味">想起集合の中で最初に挙がること</td></tr>
+            <tr><td data-label="用語">分布仮説</td><td data-label="意味">語の意味は、その語と共に現れる語によって決まるという言語学の仮説。意味集合の理論的な根拠</td></tr>
+            <tr><td data-label="用語">コサイン類似度</td><td data-label="意味">二つのベクトルのなす角の余弦。向きが近いほど1に近づく</td></tr>
+            <tr><td data-label="用語">アテンション</td><td data-label="意味">文脈中のどの位置に注目するかを重みで決め、意味を集める仕組み。Transformerの中核</td></tr>
+            <tr><td data-label="用語">MLP</td><td data-label="意味">各位置で知識を付け加える層。事実の結びつきは中間層に蓄えられている</td></tr>
+            <tr><td data-label="用語">ロジット</td><td data-label="意味">確率に変換する前の、各語の点数</td></tr>
+            <tr><td data-label="用語">EOS</td><td data-label="意味">生成の終わりを表す記号。これが選ばれた時点で回答が終わる</td></tr>
+            <tr><td data-label="用語">共起</td><td data-label="意味">二つの語が同じ文や文書に現れること。LLMO対策では、先に一緒に書いて連想をつくる</td></tr>
+            <tr><td data-label="用語">一般名詞</td><td data-label="意味">利用者がAIに入力するカテゴリ名。「経費精算システム」「会計ソフト」など</td></tr>
+            <tr><td data-label="用語">クエリファンアウト</td><td data-label="意味">AI検索が質問を複数の検索に分けて、同時に実行する仕組み</td></tr>
+            <tr><td data-label="用語">リランカー</td><td data-label="意味">検索で集めた候補を、質問との意味の類似度で並べ直すふるい</td></tr>
+            <tr><td data-label="用語">RAG</td><td data-label="意味">検索で取得した文書を生成の文脈に加えて回答する方式（検索拡張生成）</td></tr>
+            <tr><td data-label="用語">GEO</td><td data-label="意味">生成エンジン最適化。書き方の工夫で生成AIの回答での扱われ方を変える対策。効くのは文書が渡された後</td></tr>
+            <tr><td data-label="用語">重複除去</td><td data-label="意味">学習前に、同一または酷似した文書を取り除く処理。MinHashなどの手法が使われる</td></tr>
+            <tr><td data-label="用語">カットオフ</td><td data-label="意味">モデルが学習したデータの締め日</td></tr>
+            <tr><td data-label="用語">基準X</td><td data-label="意味">ルールメイクで市場に定着させる選び方の基準。構造的に勝てる軸、調査で証明できること、意味集合にある言葉であることが条件</td></tr>
+            <tr><td data-label="用語">ルールメイク</td><td data-label="意味">自社に有利な選び方の基準を調査で裏づけ、市場とAIに定着させるIDEATECHの手法</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
+
+<footer>
+  <div class="foot-logo"><img class="logo logo-b logo-foot" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iZGVzaWduIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4NTAgMTMwIj4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLmNscy0xIHsKICAgICAgICBmaWxsOiAjZjBmOwogICAgICB9CgogICAgICAuY2xzLTIgewogICAgICAgIGZpbGw6IGxpbWU7CiAgICAgIH0KCiAgICAgIC5jbHMtMyB7CiAgICAgICAgZmlsbDogI2ZmZjsKICAgICAgfQoKICAgICAgLmNscy00IHsKICAgICAgICBmaWxsOiAjMjEwMGZmOwogICAgICB9CgogICAgICAuY2xzLTUgewogICAgICAgIGZpbGw6ICNmY2ZmMDA7CiAgICAgIH0KCiAgICAgIC5jbHMtNiB7CiAgICAgICAgZmlsbDogcmVkOwogICAgICB9CgogICAgICAuY2xzLTcgewogICAgICAgIGZpbGw6IGFxdWE7CiAgICAgIH0KICAgIDwvc3R5bGU+CiAgPC9kZWZzPgogIDxnPgogICAgPHBvbHlnb24gcG9pbnRzPSI1MTUuOTkgMzIuODkgNTQyLjg4IDMyLjg5IDU0Mi44OCAxMDguNDcgNTU1LjUxIDEwOC40NyA1NTUuNTEgMzIuODkgNTgyLjUzIDMyLjg5IDU4Mi41MyAyMS40IDUxNS45OSAyMS40IDUxNS45OSAzMi44OSIvPgogICAgPHBvbHlnb24gcG9pbnRzPSI2MDIuMjUgMTA4LjQ3IDY2MCAxMDguNDcgNjYwIDk2Ljk4IDYxNC44OCA5Ni45OCA2MTQuODggNjkuNzIgNjU5LjExIDY5LjcyIDY1OS4xMSA1OC4yNCA2MTQuODggNTguMjQgNjE0Ljg4IDMyLjg5IDY2MCAzMi44OSA2NjAgMjEuNCA2MDIuMjUgMjEuNCA2MDIuMjUgMTA4LjQ3Ii8+CiAgICA8cGF0aCBkPSJNNzQ1LjkzLDg2LjYxYy00LjksNy4zNC0xMy42NSwxMS45MS0yMi44NSwxMS45MS0xNy44NywwLTMxLjM1LTE0LjQxLTMxLjM1LTMzLjUxczEzLjE4LTMzLjUxLDMxLjM1LTMzLjUxYzkuMTEsMCwxNy44Nyw0LjU2LDIyLjg2LDExLjkxbC41My43OCwxMC43NC01Ljk5LS42Ni0uOTNjLTcuOTgtMTEuMjktMTkuNTUtMTcuMjYtMzMuNDctMTcuMjYtMjUuMjksMC00NC4zNiwxOS4zNS00NC4zNiw0NXMxOS4wNyw0NSw0NC4zNiw0NWMxNC4wNSwwLDI1LjAzLTUuNjQsMzMuNTgtMTcuMjRsLjctLjk1LTEwLjkxLTUuOTktLjUyLjc4WiIvPgogICAgPHBvbHlnb24gcG9pbnRzPSI4MzcuMzcgMjEuNCA4MzcuMzcgNTcuOTggNzg5LjcxIDU3Ljk4IDc4OS43MSAyMS40IDc3Ny4wOCAyMS40IDc3Ny4wOCAxMDguNDcgNzg5LjcxIDEwOC40NyA3ODkuNzEgNjkuNDcgODM3LjM3IDY5LjQ3IDgzNy4zNyAxMDguNDcgODUwIDEwOC40NyA4NTAgMjEuNCA4MzcuMzcgMjEuNCIvPgogICAgPHBhdGggZD0iTTI4Mi44NSwyMS40aC0zMC4wOXY4Ny4wN2gzMC4wOWMyNi4yNywwLDQ0LjYyLTE3Ljg4LDQ0LjYyLTQzLjQ3cy0xOC4zNS00My42LTQ0LjYyLTQzLjZaTTI4Mi44NSw5Ni45OGgtMTcuNDVWMzIuODloMTcuNDVjMTguOSwwLDMxLjYsMTIuOSwzMS42LDMyLjExcy0xMi43LDMxLjk4LTMxLjYsMzEuOThaIi8+CiAgICA8cG9seWdvbiBwb2ludHM9IjQwNy45NCAzMi44OSA0MDcuOTQgMjEuNCAzNTAuMTggMjEuNCAzNTAuMTggMTA4LjQ3IDQwNy45NCAxMDguNDcgNDA3Ljk0IDk2Ljk4IDM2Mi44MiA5Ni45OCAzNjIuODIgNjkuNzIgNDA3LjA1IDY5LjcyIDQwNy4wNSA1OC4yNCAzNjIuODIgNTguMjQgMzYyLjgyIDMyLjg5IDQwNy45NCAzMi44OSIvPgogICAgPHBhdGggZD0iTTQ3NC4xNSwyMS40aC0xNC41MmwtMzQuOTgsODcuMDdoMTMuOTRsNy41Mi0xOC44Nmg0MS42OWw3LjUyLDE4Ljg2aDEzLjk1bC0zNS4xMS04Ny4wN1pNNDY3LjQzLDM1LjlsMTYuMzksNDIuMjJoLTMzLjgzbDE2LjUtNDIuMjJjLjQ2LDAsLjQ4LDAsLjk0LDBaIi8+CiAgICA8cG9seWdvbiBwb2ludHM9IjIyNi4wNSAzNC4wNCAyMjYuMDUgMjEuNCAyMTQuMzQgMjEuNCAyMDEuNzEgMjEuNCAxOTAgMjEuNCAxOTAgMzQuMDQgMjAxLjcxIDM0LjA0IDIwMS43MSA5NS44NCAxOTAgOTUuODQgMTkwIDEwOC40NyAyMDEuNzEgMTA4LjQ3IDIxNC4zNCAxMDguNDcgMjI2LjA1IDEwOC40NyAyMjYuMDUgOTUuODQgMjE0LjM0IDk1Ljg0IDIxNC4zNCAzNC4wNCAyMjYuMDUgMzQuMDQiLz4KICA8L2c+CiAgPGc+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTYiIGQ9Ik01Ny43Myw0NC4wM2wzLjgyLDMuMDljNi4yLTMuNDksMTMuMzUtNS40OSwyMC45Ny01LjQ5LDcuMjMsMCwxNC4wMywxLjgsMjAuMDEsNC45NmwtMy42OS0zLjc0LDYuNy02Ljc5LTguNDctNC4zOSw0LjI3LTguNTItOS40MS0xLjU1LDEuNDMtOS40My05LjQzLDEuNDMtMS41NS05LjQxLTguNTIsNC4yNy00LjM5LTguNDctNi43OSw2LjctNi43OS02LjctNC4zOSw4LjQ3LTguNTItNC4yNy0xLjU1LDkuNDEtOS40My0xLjQzLDEuNDMsOS40My05LjQxLDEuNTUsNC4yNyw4LjUyLTguNDcsNC4zOSw2LjcsNi43OS02LjcsNi43OSwxLjE3LjYxLDYuNTEtNS42NywzMC4yMi0uNTVaIi8+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTQiIGQ9Ik0zOS42Niw4NC40OWMwLTQuMjYuNjMtOC4zNywxLjc5LTEyLjI1bC0uMDItLjE0LTkuNDMsMS40MywxLjQzLTkuNDMtOS40MS0xLjU1LDQuMjctOC41Mi03LjMtMy43OC0xNi4yOSwxNC4xOEwwLDk0LjI4bDE1LjU4LDI1LjksMjguNTksOS44MiwxOC45Ni03LjI5Yy0xMy45My03LjA4LTIzLjQ3LTIxLjUzLTIzLjQ3LTM4LjIyWiIvPgogICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMjQuMDIsNjIuNTVsOS40MSwxLjU1LTEuNDMsOS40Myw5LjQzLTEuNDMuMDIuMTRjMy4yLTEwLjc1LDEwLjUtMTkuNzMsMjAuMS0yNS4xMmwtMy44Mi0zLjA5LTMwLjIyLjU1LTYuNTEsNS42Nyw3LjMsMy43OC00LjI3LDguNTJaIi8+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTIiIGQ9Ik0xMDIuNTIsNDYuNTlsMy4wMSwzLjA1LTguNDcsNC4zOSw0LjI3LDguNTItOS40MSwxLjU1LDEuNDMsOS40My05LjQzLTEuNDMtLjQzLDIuNTksMy41MSwxOC4wMS0xNC42NCwyNi40NS05LjI1LDMuNTZjNS44MiwyLjk2LDEyLjQsNC42NCwxOS4zOCw0LjY0LDIzLjY3LDAsNDIuODUtMTkuMTksNDIuODUtNDIuODUsMC0xNi40NC05LjI2LTMwLjcxLTIyLjg1LTM3LjlaIi8+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTUiIGQ9Ik02MS41NCw0Ny4xMmwxOS42OCwxNS45MiwyLjI3LDExLjY1LjQzLTIuNTksOS40MywxLjQzLTEuNDMtOS40Myw5LjQxLTEuNTUtNC4yNy04LjUyLDguNDctNC4zOS0zLjAxLTMuMDVjLTUuOTctMy4xNi0xMi43OC00Ljk2LTIwLjAxLTQuOTYtNy42MiwwLTE0Ljc3LDItMjAuOTcsNS40OVoiLz4KICAgIDxwYXRoIGNsYXNzPSJjbHMtNyIgZD0iTTg3LjAyLDkyLjdsLTMuNTEtMTguMDEtMS4xMyw2LjgyLTguNTItNC4yNy00LjM5LDguNDctNi43OS02LjctNi43OSw2LjctNC4zOS04LjQ3LTguNTIsNC4yNy0xLjUzLTkuMjdjLTEuMTYsMy44OC0xLjc5LDcuOTktMS43OSwxMi4yNSwwLDE2LjY5LDkuNTUsMzEuMTQsMjMuNDcsMzguMjJsOS4yNS0zLjU2LDE0LjY0LTI2LjQ1WiIvPgogICAgPHBhdGggY2xhc3M9ImNscy0zIiBkPSJNNjEuNTQsNDcuMTJjLTkuNTksNS40LTE2LjksMTQuMzctMjAuMSwyNS4xMmwxLjUzLDkuMjcsOC41Mi00LjI3LDQuMzksOC40Nyw2Ljc5LTYuNyw2Ljc5LDYuNyw0LjM5LTguNDcsOC41Miw0LjI3LDEuMTMtNi44Mi0yLjI3LTExLjY1LTE5LjY4LTE1LjkyWiIvPgogIDwvZz4KPC9zdmc+" alt="IDEATECH" height="22" width="144"><img class="logo logo-w logo-foot" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iZGVzaWduIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4NTAgMTMwIj4KICA8ZGVmcz4KICAgIDxzdHlsZT4KICAgICAgLmNscy0xIHsKICAgICAgICBmaWxsOiAjZjBmOwogICAgICB9CgogICAgICAuY2xzLTIgewogICAgICAgIGZpbGw6IGxpbWU7CiAgICAgIH0KCiAgICAgIC5jbHMtMyB7CiAgICAgICAgZmlsbDogI2ZmZjsKICAgICAgfQoKICAgICAgLmNscy00IHsKICAgICAgICBmaWxsOiAjMjEwMGZmOwogICAgICB9CgogICAgICAuY2xzLTUgewogICAgICAgIGZpbGw6ICNmY2ZmMDA7CiAgICAgIH0KCiAgICAgIC5jbHMtNiB7CiAgICAgICAgZmlsbDogcmVkOwogICAgICB9CgogICAgICAuY2xzLTcgewogICAgICAgIGZpbGw6IGFxdWE7CiAgICAgIH0KICAgIDwvc3R5bGU+CiAgPC9kZWZzPgogIDxnPgogICAgPHBvbHlnb24gY2xhc3M9ImNscy0zIiBwb2ludHM9IjUxNS45OSAzMi44OSA1NDIuODggMzIuODkgNTQyLjg4IDEwOC40NyA1NTUuNTEgMTA4LjQ3IDU1NS41MSAzMi44OSA1ODIuNTMgMzIuODkgNTgyLjUzIDIxLjQgNTE1Ljk5IDIxLjQgNTE1Ljk5IDMyLjg5Ii8+CiAgICA8cG9seWdvbiBjbGFzcz0iY2xzLTMiIHBvaW50cz0iNjAyLjI1IDEwOC40NyA2NjAgMTA4LjQ3IDY2MCA5Ni45OCA2MTQuODggOTYuOTggNjE0Ljg4IDY5LjcyIDY1OS4xMSA2OS43MiA2NTkuMTEgNTguMjQgNjE0Ljg4IDU4LjI0IDYxNC44OCAzMi44OSA2NjAgMzIuODkgNjYwIDIxLjQgNjAyLjI1IDIxLjQgNjAyLjI1IDEwOC40NyIvPgogICAgPHBhdGggY2xhc3M9ImNscy0zIiBkPSJNNzQ1LjkzLDg2LjYxYy00LjksNy4zNC0xMy42NSwxMS45MS0yMi44NSwxMS45MS0xNy44NywwLTMxLjM1LTE0LjQxLTMxLjM1LTMzLjUxczEzLjE4LTMzLjUxLDMxLjM1LTMzLjUxYzkuMTEsMCwxNy44Nyw0LjU2LDIyLjg2LDExLjkxbC41My43OCwxMC43NC01Ljk5LS42Ni0uOTNjLTcuOTgtMTEuMjktMTkuNTUtMTcuMjYtMzMuNDctMTcuMjYtMjUuMjksMC00NC4zNiwxOS4zNS00NC4zNiw0NXMxOS4wNyw0NSw0NC4zNiw0NWMxNC4wNSwwLDI1LjAzLTUuNjQsMzMuNTgtMTcuMjRsLjctLjk1LTEwLjkxLTUuOTktLjUyLjc4WiIvPgogICAgPHBvbHlnb24gY2xhc3M9ImNscy0zIiBwb2ludHM9IjgzNy4zNyAyMS40IDgzNy4zNyA1Ny45OCA3ODkuNzEgNTcuOTggNzg5LjcxIDIxLjQgNzc3LjA4IDIxLjQgNzc3LjA4IDEwOC40NyA3ODkuNzEgMTA4LjQ3IDc4OS43MSA2OS40NyA4MzcuMzcgNjkuNDcgODM3LjM3IDEwOC40NyA4NTAgMTA4LjQ3IDg1MCAyMS40IDgzNy4zNyAyMS40Ii8+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTMiIGQ9Ik0yODIuODUsMjEuNGgtMzAuMDl2ODcuMDdoMzAuMDljMjYuMjcsMCw0NC42Mi0xNy44OCw0NC42Mi00My40N3MtMTguMzUtNDMuNi00NC42Mi00My42Wk0yODIuODUsOTYuOThoLTE3LjQ1VjMyLjg5aDE3LjQ1YzE4LjksMCwzMS42LDEyLjksMzEuNiwzMi4xMXMtMTIuNywzMS45OC0zMS42LDMxLjk4WiIvPgogICAgPHBvbHlnb24gY2xhc3M9ImNscy0zIiBwb2ludHM9IjQwNy45NCAzMi44OSA0MDcuOTQgMjEuNCAzNTAuMTggMjEuNCAzNTAuMTggMTA4LjQ3IDQwNy45NCAxMDguNDcgNDA3Ljk0IDk2Ljk4IDM2Mi44MiA5Ni45OCAzNjIuODIgNjkuNzIgNDA3LjA1IDY5LjcyIDQwNy4wNSA1OC4yNCAzNjIuODIgNTguMjQgMzYyLjgyIDMyLjg5IDQwNy45NCAzMi44OSIvPgogICAgPHBhdGggY2xhc3M9ImNscy0zIiBkPSJNNDc0LjE1LDIxLjRoLTE0LjUybC0zNC45OCw4Ny4wN2gxMy45NGw3LjUyLTE4Ljg2aDQxLjY5bDcuNTIsMTguODZoMTMuOTVsLTM1LjExLTg3LjA3Wk00NjcuNDMsMzUuOWwxNi4zOSw0Mi4yMmgtMzMuODNsMTYuNS00Mi4yMmMuNDYsMCwuNDgsMCwuOTQsMFoiLz4KICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMyIgcG9pbnRzPSIyMjYuMDUgMzQuMDQgMjI2LjA1IDIxLjQgMjE0LjM0IDIxLjQgMjAxLjcxIDIxLjQgMTkwIDIxLjQgMTkwIDM0LjA0IDIwMS43MSAzNC4wNCAyMDEuNzEgOTUuODQgMTkwIDk1Ljg0IDE5MCAxMDguNDcgMjAxLjcxIDEwOC40NyAyMTQuMzQgMTA4LjQ3IDIyNi4wNSAxMDguNDcgMjI2LjA1IDk1Ljg0IDIxNC4zNCA5NS44NCAyMTQuMzQgMzQuMDQgMjI2LjA1IDM0LjA0Ii8+CiAgPC9nPgogIDxnPgogICAgPHBhdGggY2xhc3M9ImNscy02IiBkPSJNNTcuNzMsNDQuMDNsMy44MiwzLjA5YzYuMi0zLjQ5LDEzLjM1LTUuNDksMjAuOTctNS40OSw3LjIzLDAsMTQuMDMsMS44LDIwLjAxLDQuOTZsLTMuNjktMy43NCw2LjctNi43OS04LjQ3LTQuMzksNC4yNy04LjUyLTkuNDEtMS41NSwxLjQzLTkuNDMtOS40MywxLjQzLTEuNTUtOS40MS04LjUyLDQuMjctNC4zOS04LjQ3LTYuNzksNi43LTYuNzktNi43LTQuMzksOC40Ny04LjUyLTQuMjctMS41NSw5LjQxLTkuNDMtMS40MywxLjQzLDkuNDMtOS40MSwxLjU1LDQuMjcsOC41Mi04LjQ3LDQuMzksNi43LDYuNzktNi43LDYuNzksMS4xNy42MSw2LjUxLTUuNjcsMzAuMjItLjU1WiIvPgogICAgPHBhdGggY2xhc3M9ImNscy00IiBkPSJNMzkuNjYsODQuNDljMC00LjI2LjYzLTguMzcsMS43OS0xMi4yNWwtLjAyLS4xNC05LjQzLDEuNDMsMS40My05LjQzLTkuNDEtMS41NSw0LjI3LTguNTItNy4zLTMuNzgtMTYuMjksMTQuMThMMCw5NC4yOGwxNS41OCwyNS45LDI4LjU5LDkuODIsMTguOTYtNy4yOWMtMTMuOTMtNy4wOC0yMy40Ny0yMS41My0yMy40Ny0zOC4yMloiLz4KICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTI0LjAyLDYyLjU1bDkuNDEsMS41NS0xLjQzLDkuNDMsOS40My0xLjQzLjAyLjE0YzMuMi0xMC43NSwxMC41LTE5LjczLDIwLjEtMjUuMTJsLTMuODItMy4wOS0zMC4yMi41NS02LjUxLDUuNjcsNy4zLDMuNzgtNC4yNyw4LjUyWiIvPgogICAgPHBhdGggY2xhc3M9ImNscy0yIiBkPSJNMTAyLjUyLDQ2LjU5bDMuMDEsMy4wNS04LjQ3LDQuMzksNC4yNyw4LjUyLTkuNDEsMS41NSwxLjQzLDkuNDMtOS40My0xLjQzLS40MywyLjU5LDMuNTEsMTguMDEtMTQuNjQsMjYuNDUtOS4yNSwzLjU2YzUuODIsMi45NiwxMi40LDQuNjQsMTkuMzgsNC42NCwyMy42NywwLDQyLjg1LTE5LjE5LDQyLjg1LTQyLjg1LDAtMTYuNDQtOS4yNi0zMC43MS0yMi44NS0zNy45WiIvPgogICAgPHBhdGggY2xhc3M9ImNscy01IiBkPSJNNjEuNTQsNDcuMTJsMTkuNjgsMTUuOTIsMi4yNywxMS42NS40My0yLjU5LDkuNDMsMS40My0xLjQzLTkuNDMsOS40MS0xLjU1LTQuMjctOC41Miw4LjQ3LTQuMzktMy4wMS0zLjA1Yy01Ljk3LTMuMTYtMTIuNzgtNC45Ni0yMC4wMS00Ljk2LTcuNjIsMC0xNC43NywyLTIwLjk3LDUuNDlaIi8+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTciIGQ9Ik04Ny4wMiw5Mi43bC0zLjUxLTE4LjAxLTEuMTMsNi44Mi04LjUyLTQuMjctNC4zOSw4LjQ3LTYuNzktNi43LTYuNzksNi43LTQuMzktOC40Ny04LjUyLDQuMjctMS41My05LjI3Yy0xLjE2LDMuODgtMS43OSw3Ljk5LTEuNzksMTIuMjUsMCwxNi42OSw5LjU1LDMxLjE0LDIzLjQ3LDM4LjIybDkuMjUtMy41NiwxNC42NC0yNi40NVoiLz4KICAgIDxwYXRoIGNsYXNzPSJjbHMtMyIgZD0iTTYxLjU0LDQ3LjEyYy05LjU5LDUuNC0xNi45LDE0LjM3LTIwLjEsMjUuMTJsMS41Myw5LjI3LDguNTItNC4yNyw0LjM5LDguNDcsNi43OS02LjcsNi43OSw2LjcsNC4zOS04LjQ3LDguNTIsNC4yNywxLjEzLTYuODItMi4yNy0xMS42NS0xOS42OC0xNS45MloiLz4KICA8L2c+Cjwvc3ZnPg==" alt="IDEATECH" height="22" width="144"></div>
+  <p>© 2026 株式会社IDEATECH　本資料は、IDEATECHのご支援先への提供を目的として作成したものです。無断での転載・再配布はご遠慮ください。</p>
+  <p>図はいずれも説明のための模式図であり、実測値ではありません。トドオナダ社の独自調査にもとづく数値は、同社の調べによるものです。リサピー、IDEAインサイトは株式会社IDEATECHの登録商標です。</p>
+</footer>
+
+<script>
+(function(){
+  var links=document.querySelectorAll('nav.toc a');
+  if(!('IntersectionObserver' in window)||!links.length)return;
+  var map={};
+  links.forEach(function(a){map[a.getAttribute('href').slice(1)]=a;});
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(a){a.classList.remove('on');});
+        var a=map[e.target.id]; if(a)a.classList.add('on');
+      }
+    });
+  },{rootMargin:'-25% 0px -65% 0px'});
+  document.querySelectorAll('main section[id]').forEach(function(s){io.observe(s);});
+})();
+</script>
+</body>
+</html>
